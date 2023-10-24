@@ -24,16 +24,16 @@
 
 <div>
   <h3 class="scroll-m-20 text-2xl font-semibold tracking-tight">Trending Movies</h3>
-  <div class="grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
-    {#each trendingMovies as movie (movie.id)}
-        <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.title} />
+  <div class="grid grid-cols-2 gap-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-8">
+    {#each trendingMovies.slice(0, 16) as movie (movie.id)}
+        <img class="h-64 w-40" src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.title} />
     {/each}
   </div>
   
   <h3 class="scroll-m-20 text-2xl font-semibold tracking-tight">Trending TV Shows</h3>
-  <div class="grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
-    {#each trendingTVShows as tvshow (tvshow.id)}
-        <img src={`https://image.tmdb.org/t/p/w500${tvshow.poster_path}`} alt={tvshow.name} />
+  <div class="grid grid-cols-2 gap-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-8">
+    {#each trendingTVShows.slice(0, 16) as tvshow (tvshow.id)}
+        <img class="h-64 w-40" src={`https://image.tmdb.org/t/p/w500${tvshow.poster_path}`} alt={tvshow.name} />
     {/each}
   </div>
 </div>
