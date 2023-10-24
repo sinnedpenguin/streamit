@@ -5,5 +5,7 @@
 
 <section class="container grid items-center gap-2 md:py-2">
   <Trending />
-  <Popular />
+  <div class="mt-16">
+    <Popular />
+  </div>
 </section>
