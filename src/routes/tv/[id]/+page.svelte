@@ -1,29 +1,22 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
   import { page } from '$app/stores';
 	import type { TV } from '$lib/types/tv';
   import { PlayCircle } from 'lucide-svelte';
 
-  let id: string;
   let details: TV;
 
-  onMount(async () => {
-    const { params } = $page; 
-    id = params.id; 
-
-    try {
-      const response = await fetch(`https://api.themoviedb.org/3/tv/${id}?api_key=${import.meta.env.VITE_API_KEY}`);
-      console.log(response);
-
-      if (!response.ok) {
-        throw new Error(`Failed to fetch data: ${response.status}`);
-      }
-
-      details = await response.json();
-    } catch (error) {
-      console.error(error);
+  async function fetchTVShowDetails(id: string) {
+    const res = await fetch(`https://api.themoviedb.org/3/tv/${id}?api_key=${import.meta.env.VITE_API_KEY}`);
+    if (!res.ok) {
+      throw new Error(`Failed to fetch data: ${res.status}`);
     }
-  });
+    details = await res.json();
+  }
+
+  $: {
+    const { id } = $page.params;
+    fetchTVShowDetails(id);
+  }
 </script>
 
 {#if details}
