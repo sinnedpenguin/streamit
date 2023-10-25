@@ -1,22 +1,9 @@
 <script lang="ts">
-  import { page } from '$app/stores';
-	import type { TV } from '$lib/types/tv';
-  import { PlayCircle } from 'lucide-svelte';
+	import type { TV } from "$lib/types/tv";
+	import { PlayCircle } from "lucide-svelte";
 
-  let details: TV;
-
-  async function fetchTVShowDetails(id: string) {
-    const res = await fetch(`https://api.themoviedb.org/3/tv/${id}?api_key=${import.meta.env.VITE_API_KEY}`);
-    if (!res.ok) {
-      throw new Error(`Failed to fetch data: ${res.status}`);
-    }
-    details = await res.json();
-  }
-
-  $: {
-    const { id } = $page.params;
-    fetchTVShowDetails(id);
-  }
+  export let data: TV;
+  const details = data;
 </script>
 
 {#if details}
