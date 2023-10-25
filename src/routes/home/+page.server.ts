@@ -1,4 +1,5 @@
 import type { PageServerLoad } from './$types';
+import { TMDB_API_KEY } from '$env/static/private';
 
 const fetchData = async (url: string) => {
   const res = await fetch(url);
@@ -10,9 +11,9 @@ const fetchData = async (url: string) => {
   return data.results;
 };
 
-export const load: PageServerLoad = async () => {
+export const load = (async () => {
   const apiBaseUrl = "https://api.themoviedb.org/3";
-  const apiKey = import.meta.env.VITE_API_KEY;
+  const apiKey = TMDB_API_KEY;
 
   const trendingMovies = fetchData(`${apiBaseUrl}/trending/movie/day?api_key=${apiKey}`);
   const trendingTVShows = fetchData(`${apiBaseUrl}/trending/tv/day?api_key=${apiKey}`);
@@ -25,4 +26,4 @@ export const load: PageServerLoad = async () => {
     popularMovies,
     popularTVShows,
   };
-};
+}) satisfies PageServerLoad;

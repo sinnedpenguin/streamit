@@ -1,21 +1,15 @@
-export async function load({ fetch, params }) {
-  const fetchDetails = async () => {
-    const { id } = params;
-    const res = await fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${import.meta.env.VITE_API_KEY}`);
-    const data = await res.json();
-    
-    return data;
-  }
+import type { PageLoad } from './$types';
 
-  const fetchSimilar = async () => {
-    const { id } = params;
-    const res = await fetch(`https://api.themoviedb.org/3/movie/${id}/similar?api_key=${import.meta.env.VITE_API_KEY}`);
-    const data = await res.json();
-    return data.results;
-  }
+export const load = (async ({ fetch, params }) => {
+	const fetchDetails = async () => {
+		const { id } = params;
+		const res = await fetch(`${import.meta.env.VITE_DETAILS_URL}${id}?type=movie`);
+		const data = await res.json();
 
-  return {
-    details: await fetchDetails(),
-    similar: await fetchSimilar()
-  }
-}
+		return data;
+	}
+
+	return {
+		details: await fetchDetails(),
+	};
+}) satisfies PageLoad;
