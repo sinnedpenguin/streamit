@@ -1,5 +1,6 @@
 export type Movie = {
-  id: number;
+  id: string;
+  episodeId: string;
   title: string;
   cover: string;
   poster_path: string;
@@ -9,4 +10,5 @@ export type Movie = {
   vote_average: number;
   release_date: string;
   similar: Movie[];
+  url: string;
 };

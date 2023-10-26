@@ -1,5 +1,6 @@
 <script lang="ts">
-  import type { Movie } from "$lib/types/movie";
+	import type { Movie } from "$lib/types/movie";
+	import Videoplayer from "$lib/components/videoplayer.svelte";
 
   export let data: {
     details?: Movie;
@@ -17,7 +18,7 @@
     watchData = await res.json();
     isLoading = false;
   };
-	
+
   $: {
     ({ details, similar } = data);
 		fetchData();
@@ -25,19 +26,12 @@
 </script>
 
 {#if details}
+	{#if watchData?.id}
+		<section class="container grid items-center">
+			<Videoplayer url={`${import.meta.env.VITE_WATCH_URL}${watchData?.episodeId}?id=${watchData?.id}`} />
+		</section>
+	{/if}
 	<div class="container grid items-center gap-4 pb-8 pt-6 md:py-2 relative">
-		<div class="w-full h-[60vh] relative">
-			{#if isLoading}
-				<div class="w-full h-full bg-black"></div>
-			{:else}
-				<img
-					class="w-full h-full object-cover"
-					src={watchData?.cover || `https://image.tmdb.org/t/p/w500/${details.backdrop_path}`}
-					alt={details.title}
-				/>
-			{/if}
-			<div class="absolute top-0 left-0 w-full h-full" style="background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6));"></div>
-		</div>
 		<h1 class="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl text-primary">{details.title || 'N/A'}</h1>
 		<p class="leading-7 [&:not(:first-child)]:mt-6">{details.overview || 'Description: N/A'}</p>
 		{#if details.vote_average}

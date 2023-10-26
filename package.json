@@ -33,8 +33,10 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"artplayer": "^5.0.9",
 		"bits-ui": "^0.6.3",
 		"clsx": "^2.0.0",
+		"hls.js": "^1.4.12",
 		"lucide-svelte": "^0.288.0",
 		"tailwind-merge": "^1.14.0",
 		"tailwind-variants": "^0.1.14"
