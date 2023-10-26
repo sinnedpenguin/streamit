@@ -1,12 +1,12 @@
 export type TV = {
   id: number;
-  title: string;
   name: string;
-  poster_path: string;
-  image: string;
   cover: string;
-  description: string;
+  poster_path: string;
+  backdrop_path: string;
   releaseDate: string;
-  rating: number;
+  overview: string;
+  vote_average: number;
+  first_air_date: string;
   similar: TV[];
 };

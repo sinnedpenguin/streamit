@@ -1,11 +1,12 @@
 export type Movie = {
   id: number;
   title: string;
-  poster_path: string;
-  image: string;
   cover: string;
-  description: string;
+  poster_path: string;
+  backdrop_path: string;
   releaseDate: string;
-  rating: number;
+  overview: string;
+  vote_average: number;
+  release_date: string;
   similar: Movie[];
 };
