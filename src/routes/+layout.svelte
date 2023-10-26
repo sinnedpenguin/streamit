@@ -5,5 +5,5 @@
 </script>
 
 <SiteHeader />
-<slot></slot>
+<slot />
 <SiteFooter />

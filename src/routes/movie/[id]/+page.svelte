@@ -49,7 +49,7 @@
 		</h3>
 		<div class="grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
 			{#each details.similar.slice(0, 18) as similarMovie (similarMovie.id)}
-				<a href="/tv/{similarMovie.id}"> 
+				<a href="/movie/{similarMovie.id}"> 
 					<img src={similarMovie.image} alt={similarMovie.title} />
 				</a>
 			{/each}
