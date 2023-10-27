@@ -4,7 +4,7 @@ export const options = {
   hotkey: true,
   isLive: false,
   muted: false,
-  autoplay: false,
+  autoplay: true,
   pip: true,
   autoOrientation: true,
   setting: true,

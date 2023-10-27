@@ -36,7 +36,7 @@
 {#if $loading}
   <div class="overlay">
     <div class="loader-container">
-      <Loader2 class="h-16 w-16 text-primary animate-spin" />
+      <Loader2 class="h-20 w-20 text-primary animate-spin" />
     </div>
   </div>
 {/if}
