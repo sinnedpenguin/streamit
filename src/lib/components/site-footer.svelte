@@ -36,7 +36,7 @@
       href="https://www.instagram.com/odd_kids_club"
       class="hover:underline" rel="noreferrer"
     >
-      oddmoon
+      oddmoon 
     </a>
     </span>
   </div>

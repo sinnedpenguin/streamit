@@ -1,10 +1,10 @@
 <script lang="ts">
   import { navigating } from "$app/stores";
-	import { loading } from "$lib/components/loading";
-  import Loading from "$lib/components/Loading.svelte";
+  import { loading } from "$lib/stores/loading";
+	import Loader from "$lib/components/loader.svelte";
 
   $: $loading = !!$navigating;
 </script>
 
 <slot />
-<Loading />
+<Loader />

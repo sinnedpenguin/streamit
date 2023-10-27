@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { loading } from "./loading";
+	import { loading } from "$lib/stores/loading";
   import { Loader2 } from "lucide-svelte";
 </script>
 

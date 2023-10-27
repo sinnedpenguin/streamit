@@ -85,12 +85,12 @@
   <p>Casts: {casts.slice(0, 5).map(cast => cast.name).join(', ')}</p>
 </div>
 {#if details && similar}
-  <div class="container grid items-center gap-4 pb-8 pt-6 md:py-2 relative">
+  <div class="container grid items-center gap-4 pb-8 pt-6 md:py-2 relative mt-8">
     <h3 class="scroll-m-20 text-2xl text-primary font-semibold tracking-tight mb-2">
       You may also like:
     </h3>
-    <div class="grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
-      {#each similar.slice(0, 18) as similarMovie (similarMovie.id)}
+    <div class="grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+      {#each similar as similarMovie (similarMovie.id)}
         <a href="/movie/{similarMovie.id}">
           <div class="flex flex-col items-center">
             <img src={`https://image.tmdb.org/t/p/w500/${similarMovie.poster_path}`} alt={similarMovie.title} />
