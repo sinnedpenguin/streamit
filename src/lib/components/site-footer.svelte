@@ -29,5 +29,15 @@
         STREAMit! does not store any files on our server; we only link to the media hosted on 3rd-party services.
       </p>
     </span>
+    <span class="block text-center text-sm text-muted-foreground mt-4">
+      Logo by: 
+      <a 
+      target="_blank"
+      href="https://www.instagram.com/odd_kids_club"
+      class="hover:underline" rel="noreferrer"
+    >
+      oddmoon
+    </a>
+    </span>
   </div>
 </footer>

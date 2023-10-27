@@ -4,7 +4,7 @@
 
 	const navItems = [
 		{ href: '/home', label: 'Home' },
-		{ href: '/movies', label: 'Movies' },
+		{ href: '/movie', label: 'Movies' },
 		{ href: '/tv', label: 'TV Shows' }
 	];
 </script>
