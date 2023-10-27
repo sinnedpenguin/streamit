@@ -2,6 +2,7 @@
   import { onMount } from 'svelte';
   import Artplayer from 'artplayer';
   import Hls from 'hls.js';
+  import { options } from '$lib/config/videoplayer';
 
   export let url = '';
   let videoUrl = '';
@@ -9,7 +10,7 @@
   async function fetchVideoUrl() {
     const response = await fetch(url);
     const data = await response.json();
-    videoUrl = data.sources[0].url; 
+    videoUrl = data.sources[3].url; 
     console.log(videoUrl);
   }
 
@@ -33,6 +34,7 @@
   onMount(async () => {
     await fetchVideoUrl();
     art = new Artplayer({
+      ...options,
       container: '.artplayer-app',
       url: videoUrl,
       type: 'm3u8',
