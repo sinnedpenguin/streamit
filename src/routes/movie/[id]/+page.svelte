@@ -1,14 +1,15 @@
 <script lang="ts">
-	import type { Movie } from "$lib/types/movie";
-	import { PlayCircle } from "lucide-svelte";
+	import type { Movie, Cast } from "$lib/types/movie";
+	import { PlayCircle, Star, Clock, Tv } from "lucide-svelte";
 	import Videoplayer from "../../../lib/components/videoplayer.svelte";
 
   export let data: {
     details?: Movie;
     similar: Movie[];
+    casts: Cast[];
   };
 
-  let { details, similar } = data;
+  let { details, similar, casts } = data;
 
   let watchData: Movie | undefined;
   let isLoading = true;
@@ -21,8 +22,17 @@
     isLoading = false;
   };
 
+  const formatRuntime = (runtime: number | undefined) => {
+    if (runtime === undefined) {
+      return 'N/A';
+    }
+    const hours = Math.floor(runtime / 60);
+    const minutes = runtime % 60;
+    return `${hours}h ${minutes}m`;
+  };
+
   $: {
-    ({ details, similar } = data);
+    ({ details, similar, casts } = data);
 		fetchData();
   }
 </script>
@@ -58,13 +68,21 @@
 {/if}
 <div class="container grid items-center gap-4 pb-8 pt-6 md:py-2 relative">
   <h1 class="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl text-primary">{details?.title || 'N/A'}</h1>
-  <p class="leading-7 [&:not(:first-child)]:mt-6">{details?.overview || 'Description: N/A'}</p>
-  {#if details?.vote_average}
-    <p>Rating: {details.vote_average}</p>
-  {/if}
-  {#if details?.release_date}
-    <p>Release date: {details.release_date}</p>
-  {/if}
+  <span class="flex items-center">
+    <Tv class="h-4 w-4 mr-2 text-primary"/>
+    MOVIE
+    <Star class="h-4 w-4 mx-2 text-primary"/>
+    {details?.vote_average.toFixed(1)}
+    <Clock class="h-4 w-4 mx-2 text-primary"/>
+    {formatRuntime(details?.runtime)}
+  </span>
+  <blockquote class="italic">
+    {details?.tagline || ''}
+  </blockquote>
+  <p>{details?.overview || ''}</p>
+  <p>Released: {details?.release_date}</p>
+  <p>Genres: {details?.genres.map(genre => genre.name).join(', ')}</p>
+  <p>Casts: {casts.slice(0, 5).map(cast => cast.name).join(', ')}</p>
 </div>
 {#if details && similar}
   <div class="container grid items-center gap-4 pb-8 pt-6 md:py-2 relative">

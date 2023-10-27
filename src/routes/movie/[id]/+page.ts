@@ -14,14 +14,22 @@ export const load = (async ({ fetch, params }) => {
     return data.results; 
   }
 
+  const fetchCasts = async (id: string) => {
+    const res = await fetch(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=${import.meta.env.VITE_TMDB_API_KEY}&language=en-US`);
+    const data = await res.json();
+    return data.cast;
+  }
+
   const { id } = params;
-  const [details, similar] = await Promise.all([
+  const [details, similar, casts] = await Promise.all([
     fetchDetails(),
     fetchSimilar(id),
+    fetchCasts(id),
   ]);
-
-	return {
+  
+  return {
     details,
     similar,
+    casts,
   };
 }) satisfies PageLoad;
