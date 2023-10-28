@@ -33,7 +33,7 @@
 
   $: {
     ({ details, similar, casts } = data);
-		fetchData();
+    fetchData();
   }
 </script>
 

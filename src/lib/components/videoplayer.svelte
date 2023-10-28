@@ -1,16 +1,28 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onDestroy, onMount } from 'svelte';
   import Artplayer from 'artplayer';
   import Hls from 'hls.js';  
   import { options } from '$lib/config/videoplayer';
+	import type { Quality, Subtitle } from '$lib/types/videoplayer';
 
   export let url = '';
   let videoUrl = '';
+  let qualityOptions: Quality[];
+  let subtitles: Subtitle[];
 
   async function fetchVideoUrl() {
-    const response = await fetch(url);
-    const data = await response.json();
-    videoUrl = data.sources[0].url; 
+  const response = await fetch(url);
+  const data = await response.json();
+  qualityOptions = data.sources;
+  subtitles = data.subtitles;
+  
+  const autoQualityOption = qualityOptions.find((qualityOption) => qualityOption.quality === 'auto');
+    if (autoQualityOption) {
+      videoUrl = autoQualityOption.url;
+      console.log(videoUrl);
+    } else {
+      videoUrl = data.sources[0].url; 
+    }
   }
 
   function playM3u8(video: HTMLMediaElement, url: string, art: Artplayer & { hls?: Hls }) {
@@ -40,7 +52,51 @@
       customType: {
         m3u8: playM3u8,
       },
+      settings: [
+        {
+          html: 'Quality',
+          selector: qualityOptions.map((qualityOption) => ({
+            default: qualityOption.quality === 'auto',
+            html: qualityOption.quality,
+            url: qualityOption.url,
+          })),
+          onSelect: (item) => {
+            const qualityOption = qualityOptions.find((q) => q.quality === item.html);
+            if (qualityOption) {
+              art?.switchQuality(item.url);
+              
+              return item.html;
+            }
+          },
+        },
+        {
+          html: 'Subtitle',
+          selector: subtitles.map((subtitle) => ({
+            default: subtitle.lang === 'English',
+            html: subtitle.lang,
+            url: subtitle.url
+          })),
+          onSelect: (item) => {
+            const subtitle = subtitles.find((s) => s.lang === item.html);
+            if (subtitle) {
+              art?.subtitle.switch(item.url);
+              
+              return item.html;
+            }
+          }
+        }
+      ]
     });
+    const englishSubtitle = subtitles.find((s) => s.lang === 'English');
+    if (englishSubtitle) {
+      art?.subtitle.switch(englishSubtitle.url);
+    }
+  });
+
+  onDestroy(() => {
+    if (art) {
+      art.destroy(false);
+    }
   });
 </script>
 
