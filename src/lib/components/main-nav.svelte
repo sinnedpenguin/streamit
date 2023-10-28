@@ -1,6 +1,7 @@
 <script>
-	import Button from "./ui/button/button.svelte";
-	import { Search, User } from "lucide-svelte";
+	import Search from "./search.svelte";
+import Button from "./ui/button/button.svelte";
+	import { User } from "lucide-svelte";
 
 	const navItems = [
 		{ href: '/home', label: 'Home' },
@@ -15,9 +16,7 @@
       <Button variant="ghost">{item.label}</Button>
     </a>
   {/each}
-  <Button variant="ghost">
-    <Search class="h-5 w-5" />
-  </Button>
+  <Search />
   <Button variant="ghost">
     <User class="h-6 w-6" />
   </Button>

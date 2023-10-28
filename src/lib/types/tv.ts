@@ -1,4 +1,5 @@
 export type TV = {
+  media_type?: 'tv';
   id: number;
   name: string;
   cover: string;

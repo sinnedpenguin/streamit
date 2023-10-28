@@ -84,7 +84,7 @@
   <p>Genres: {details?.genres.map(genre => genre.name).join(', ')}</p>
   <p>Casts: {casts.slice(0, 5).map(cast => cast.name).join(', ')}</p>
 </div>
-{#if details && similar}
+{#if details && similar && similar.length > 0}
   <div class="container grid items-center gap-4 pb-8 pt-6 md:py-2 relative mt-8">
     <h3 class="scroll-m-20 text-2xl text-primary font-semibold tracking-tight mb-2">
       You may also like:

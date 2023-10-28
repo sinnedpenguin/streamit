@@ -64,7 +64,6 @@
             const qualityOption = qualityOptions.find((q) => q.quality === item.html);
             if (qualityOption) {
               art?.switchQuality(item.url);
-              
               return item.html;
             }
           },
@@ -80,7 +79,6 @@
             const subtitle = subtitles.find((s) => s.lang === item.html);
             if (subtitle) {
               art?.subtitle.switch(item.url);
-              
               return item.html;
             }
           }
