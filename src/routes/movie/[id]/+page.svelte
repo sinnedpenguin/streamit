@@ -2,9 +2,8 @@
 	import Videoplayer from "$lib/components/videoplayer.svelte";
 	import type { Movie, Cast } from "$lib/types/movie";
 	import { PlayCircle, Star, Clock, Tv } from "lucide-svelte";
-  import { Splide, SplideSlide } from '@splidejs/svelte-splide';
   import '@splidejs/svelte-splide/css';
-	import { options } from "$lib/config/carousel";
+	import Carousel from "$lib/components/carousel.svelte";
 
   export let data: {
     details?: Movie;
@@ -94,28 +93,10 @@
     <h3 class="scroll-m-20 text-2xl text-primary font-semibold tracking-tight mb-2">
       You may also like:
     </h3>
-    <Splide options={{ ...options, drag: "free" }}>
-      {#if recommendations && recommendations.length > 0}
-        {#each recommendations as recommendation (recommendation.id)}
-          <SplideSlide>
-            <a href="/movie/{recommendation.id}">
-              <div class="flex flex-col items-center">
-                <img src={`https://image.tmdb.org/t/p/w500/${recommendation.poster_path}`} alt={recommendation.title} />
-              </div>
-            </a>
-          </SplideSlide>
-        {/each}
-      {:else}
-        {#each similar as similarMovie (similarMovie.id)}
-          <SplideSlide>
-            <a href="/movie/{similarMovie.id}">
-              <div class="flex flex-col items-center">
-                <img src={`https://image.tmdb.org/t/p/w500/${similarMovie.poster_path}`} alt={similarMovie.title} />
-              </div>
-            </a>
-          </SplideSlide>
-        {/each}
-      {/if}
-    </Splide>
+    {#if recommendations && recommendations.length > 0}
+      <Carousel items={recommendations} url="/movie" title="title" />
+    {:else}
+      <Carousel items={similar} url="/movie" title="title" />
+    {/if}
   </div>
 {/if}
