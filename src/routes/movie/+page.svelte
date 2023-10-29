@@ -24,14 +24,14 @@
   onMount(fetchData);
 </script>
 
-<section class="container grid items-center gap-2 md:py-2">
+<section class="container grid items-center gap-2 md:py-2 mt-4">
   <h3 class="scroll-m-20 text-2xl text-primary font-semibold tracking-tight mb-2">
     Popular <span class="text-white">Movies</span> 
   </h3>
-  <div class="grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+  <div class="grid grid-cols-2 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
     {#each popularMovies as popularMovie (popularMovie.id)}
       <a href="movie/{popularMovie.id}"> 
-        <img src={`https://image.tmdb.org/t/p/w500${popularMovie.poster_path}`} alt={popularMovie.title} />
+        <img src={`https://image.tmdb.org/t/p/w500${popularMovie.poster_path}`} alt={popularMovie.title} class="rounded" />
       </a>
     {/each}
   </div>

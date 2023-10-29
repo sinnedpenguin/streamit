@@ -31,7 +31,7 @@
 				<div class="w-full h-full bg-black"></div>
 			{:else}
 				<img
-					class="w-full h-full object-cover"
+					class="w-full h-full object-cover rounded"
 					src={watchData?.cover || `https://image.tmdb.org/t/p/w500/${details.backdrop_path}`}
 					alt={details.name}
 				/>
@@ -64,11 +64,11 @@
     <h3 class="scroll-m-20 text-2xl text-primary font-semibold tracking-tight mb-2">
       You may also like:
     </h3>
-    <div class="grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+    <div class="grid grid-cols-2 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
       {#each similar as similarTVShow (similarTVShow.id)}
         <a href="/tv/{similarTVShow.id}">
           <div class="flex flex-col items-center">
-            <img src={`https://image.tmdb.org/t/p/w500/${similarTVShow.poster_path}`} alt={similarTVShow.name} />
+            <img src={`https://image.tmdb.org/t/p/w500/${similarTVShow.poster_path}`} alt={similarTVShow.name} class="rounded" />
           </div>
         </a>
       {/each}

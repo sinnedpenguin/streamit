@@ -19,13 +19,12 @@
 <form class="flex w-full max-w-sm items-center space-x-2">
   <div class="flex items-center space-x-2 w-full">
     <div class="relative w-full">
-      <Input bind:value={query} type="text" placeholder="Search..." class="pl-10 pr-4 py-2" />
+      <Input bind:value={query} type="text" placeholder="Search..." class="pl-10 pr-4 py-2 w-80" />
       <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
         <SearchIcon class="h-4 w-4" />
       </div>
-      
       {#if results.length > 0}
-        <div class="absolute w-full mt-2 bg-white text-black overflow-auto max-h-[50vh]">
+        <div class="absolute w-full mt-2 bg-[#0C0A09] text-white overflow-auto max-h-[50vh] rounded">
           <ul class="p-4 space-y-2">
             {#each results as result (result.id)}
               <li class="flex items-center space-x-2 mb-2 pb-2 border-b border-gray-200">

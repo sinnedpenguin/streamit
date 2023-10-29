@@ -1,7 +1,7 @@
 <script lang="ts">
+	import Videoplayer from "$lib/components/videoplayer.svelte";
 	import type { Movie, Cast } from "$lib/types/movie";
 	import { PlayCircle, Star, Clock, Tv } from "lucide-svelte";
-	import Videoplayer from "../../../lib/components/videoplayer.svelte";
 
   export let data: {
     details?: Movie;
@@ -47,7 +47,7 @@
       <div class="w-full h-60 sm:h-auto md:h-[50vh] lg:h-[60vh] xl:h-[70vh] relative">
         {#if !isLoading}
           <img
-            class="w-full h-full object-cover"
+            class="w-full h-full object-cover rounded"
             src={watchData?.cover || `https://image.tmdb.org/t/p/w500/${details.backdrop_path}`}
             alt={details.title}
           />
@@ -89,11 +89,11 @@
     <h3 class="scroll-m-20 text-2xl text-primary font-semibold tracking-tight mb-2">
       You may also like:
     </h3>
-    <div class="grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+    <div class="grid grid-cols-2 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
       {#each similar as similarMovie (similarMovie.id)}
         <a href="/movie/{similarMovie.id}">
           <div class="flex flex-col items-center">
-            <img src={`https://image.tmdb.org/t/p/w500/${similarMovie.poster_path}`} alt={similarMovie.title} />
+            <img src={`https://image.tmdb.org/t/p/w500/${similarMovie.poster_path}`} alt={similarMovie.title} class="rounded" />
           </div>
         </a>
       {/each}
