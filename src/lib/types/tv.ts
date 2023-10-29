@@ -9,5 +9,4 @@ export type TV = {
   overview: string;
   vote_average: number;
   first_air_date: string;
-  similar: TV[];
 };

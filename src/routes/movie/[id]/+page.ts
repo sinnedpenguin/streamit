@@ -8,6 +8,12 @@ export const load = (async ({ fetch, params }) => {
     return data;
   }
 
+  const fetchRecommendations = async (id: string) => {
+    const res = await fetch(`https://api.themoviedb.org/3/movie/${id}/recommendations?api_key=${import.meta.env.VITE_TMDB_API_KEY}&language=en-US`);
+    const data = await res.json();
+    return data.results; 
+  }
+
   const fetchSimilar = async (id: string) => {
     const res = await fetch(`https://api.themoviedb.org/3/movie/${id}/similar?api_key=${import.meta.env.VITE_TMDB_API_KEY}&language=en-US`);
     const data = await res.json();
@@ -21,14 +27,16 @@ export const load = (async ({ fetch, params }) => {
   }
 
   const { id } = params;
-  const [details, similar, casts] = await Promise.all([
+  const [details, recommendations, similar, casts] = await Promise.all([
     fetchDetails(),
+    fetchRecommendations(id),
     fetchSimilar(id),
     fetchCasts(id),
   ]);
   
   return {
     details,
+    recommendations,
     similar,
     casts,
   };

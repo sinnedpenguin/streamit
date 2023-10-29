@@ -14,7 +14,6 @@ export type Movie = {
   runtime: number;
   release_date: string;
   genres: Genre[];
-  similar: Movie[];
   url: string;
 };
 

@@ -28,10 +28,13 @@
   <h3 class="scroll-m-20 text-2xl text-primary font-semibold tracking-tight mb-2">
     Popular <span class="text-white">Movies</span> 
   </h3>
-  <div class="grid grid-cols-2 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+  <div class="grid grid-cols-2 gap-[0.1rem] sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
     {#each popularMovies as popularMovie (popularMovie.id)}
       <a href="movie/{popularMovie.id}"> 
-        <img src={`https://image.tmdb.org/t/p/w500${popularMovie.poster_path}`} alt={popularMovie.title} class="rounded" />
+        <img 
+          src={`https://image.tmdb.org/t/p/w500${popularMovie.poster_path}`} 
+          alt={popularMovie.title} 
+        />
       </a>
     {/each}
   </div>

@@ -33,6 +33,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@splidejs/svelte-splide": "^0.2.9",
 		"artplayer": "^5.0.9",
 		"bits-ui": "^0.6.3",
 		"clsx": "^2.0.0",

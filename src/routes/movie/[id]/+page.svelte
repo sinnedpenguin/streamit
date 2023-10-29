@@ -2,14 +2,18 @@
 	import Videoplayer from "$lib/components/videoplayer.svelte";
 	import type { Movie, Cast } from "$lib/types/movie";
 	import { PlayCircle, Star, Clock, Tv } from "lucide-svelte";
+  import { Splide, SplideSlide } from '@splidejs/svelte-splide';
+  import '@splidejs/svelte-splide/css';
+	import { options } from "$lib/config/carousel";
 
   export let data: {
     details?: Movie;
+    recommendations: Movie[];
     similar: Movie[];
     casts: Cast[];
   };
 
-  let { details, similar, casts } = data;
+  let { details, recommendations, similar, casts } = data;
 
   let watchData: Movie | undefined;
   let isLoading = true;
@@ -32,7 +36,7 @@
   };
 
   $: {
-    ({ details, similar, casts } = data);
+    ({ details, recommendations, similar, casts } = data);
     fetchData();
   }
 </script>
@@ -84,19 +88,34 @@
   <p>Genres: {details?.genres.map(genre => genre.name).join(', ')}</p>
   <p>Casts: {casts.slice(0, 5).map(cast => cast.name).join(', ')}</p>
 </div>
-{#if details && similar && similar.length > 0}
+
+{#if details && ((recommendations && recommendations.length > 0) || (similar && similar.length > 0))}
   <div class="container grid items-center gap-4 pb-8 pt-6 md:py-2 relative mt-8">
     <h3 class="scroll-m-20 text-2xl text-primary font-semibold tracking-tight mb-2">
       You may also like:
     </h3>
-    <div class="grid grid-cols-2 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
-      {#each similar as similarMovie (similarMovie.id)}
-        <a href="/movie/{similarMovie.id}">
-          <div class="flex flex-col items-center">
-            <img src={`https://image.tmdb.org/t/p/w500/${similarMovie.poster_path}`} alt={similarMovie.title} class="rounded" />
-          </div>
-        </a>
-      {/each}
-    </div>
+    <Splide options={{ ...options, drag: "free" }}>
+      {#if recommendations && recommendations.length > 0}
+        {#each recommendations as recommendation (recommendation.id)}
+          <SplideSlide>
+            <a href="/movie/{recommendation.id}">
+              <div class="flex flex-col items-center">
+                <img src={`https://image.tmdb.org/t/p/w500/${recommendation.poster_path}`} alt={recommendation.title} />
+              </div>
+            </a>
+          </SplideSlide>
+        {/each}
+      {:else}
+        {#each similar as similarMovie (similarMovie.id)}
+          <SplideSlide>
+            <a href="/movie/{similarMovie.id}">
+              <div class="flex flex-col items-center">
+                <img src={`https://image.tmdb.org/t/p/w500/${similarMovie.poster_path}`} alt={similarMovie.title} />
+              </div>
+            </a>
+          </SplideSlide>
+        {/each}
+      {/if}
+    </Splide>
   </div>
 {/if}
