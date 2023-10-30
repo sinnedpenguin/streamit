@@ -44,7 +44,7 @@
     <div class="w-full h-60 sm:h-auto md:h-[50vh] lg:h-[60vh] xl:h-[70vh] relative">
     {#if !isLoading}
       <img
-        class="w-full h-full object-cover rounded"
+        class="w-full h-full object-cover"
         src={watchData?.cover || `https://image.tmdb.org/t/p/w500/${details.backdrop_path}`}
         alt={details.title}
       />

@@ -1,18 +1,105 @@
 <script lang="ts">
   import Carousel from "$lib/components/carousel.svelte";
+	import Button from "$lib/components/ui/button/button.svelte";
 	import type { Movie } from "$lib/types/movie";
 	import type { TV } from "$lib/types/tv";
+	import { Splide, SplideSlide } from "@splidejs/svelte-splide";
   import '@splidejs/svelte-splide/css';
+	import { Clock, Star, Tv, Play, Bookmark } from "lucide-svelte";
+	import { onMount } from "svelte";
 
   export let data: { 
     topRatedMovies: Movie[], 
     topRatedTVShows: TV[],
     trendingMovies: Movie[],
-    trendingTVShows: TV[]
+    trendingTVShows: TV[],
   }; 
+
+  let isLoading = true;
+
+  const fetchData = async () => {
+    const requests = trendingMovies.map(async (movie, i) => {
+      const res1 = fetch(`https://api.themoviedb.org/3/movie/${movie.id}?api_key=${import.meta.env.VITE_TMDB_API_KEY}`);
+      const res2 = fetch(`${import.meta.env.VITE_DETAILS_URL}${movie.id}?type=movie`);
+
+      const [data1, data2] = await Promise.all([res1, res2].map(async res => (await res).json()));
+      trendingMovies[i] = { ...movie, ...data2, ...data1 };
+    });
+
+    await Promise.all(requests);
+    isLoading = false;
+  };
+
+  const formatRuntime = (runtime: number | undefined) => {
+    if (runtime === undefined) {
+      return '';
+    }
+    const hours = Math.floor(runtime / 60);
+    const minutes = runtime % 60;
+    return `${hours}h ${minutes}m`;
+  };
   
   const { topRatedMovies, topRatedTVShows, trendingMovies, trendingTVShows } = data;
+  
+  onMount(fetchData);
 </script>
+
+<section class="container grid items-center">
+  <Splide options={{
+      type: "loop", 
+      autoplay: true, 
+      pagination: false, 
+      perPage: 1, 
+      arrows: false, 
+      focus: "center", 
+      gap: "1rem"}}
+    >
+    {#each trendingMovies.slice(0, 5) as movie}
+      <SplideSlide>
+        <div class="w-full h-60 sm:h-auto md:h-[50vh] lg:h-[60vh] xl:h-[70vh] relative">
+          <img
+            class="w-full h-full object-cover"
+            src={movie.cover}
+            alt={movie.title}
+          />
+          <div class="absolute inset-0 bg-black opacity-60"></div> 
+          {#if !isLoading}
+            <div class="absolute bottom-0 left-0 text-white p-4 text-xl mx-4">
+              <h1 class="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl text-primary">{movie.title}</h1>
+              <span class="flex items-center mt-4">
+                <Tv class="h-4 w-4 mr-2 text-primary"/>
+                <small>MOVIE</small>
+                <Star class="h-4 w-4 mx-2 text-primary"/>
+                <small>{movie.vote_average.toFixed(1)}</small>
+                <Clock class="h-4 w-4 mx-2 text-primary"/>
+                <small>{formatRuntime(movie.runtime)}</small>
+              </span>
+              <small>  
+                <blockquote class="italic">
+                  {movie.tagline || ''}
+                </blockquote>
+              </small>
+              <small>{movie.overview}</small>
+              <div class="flex space-x-2 mt-4">
+                <a href="/movie/{movie.id}"> 
+                  <Button>
+                    <Play class="h-4 w-4 mr-1" /> Watch
+                  </Button>
+                </a>
+                <Button variant="secondary">
+                  <Bookmark class="h-4 w-4" />
+                </Button>
+              </div>
+            </div> 
+          {/if}
+        </div>
+      </SplideSlide>
+    {/each}
+    <div class="splide__progress">
+      <div class="splide__progress__bar" />
+    </div>
+  </Splide>
+</section>
 
 <section class="container grid items-center gap-2 md:py-2 mt-4">
   <h3 class="scroll-m-20 text-2xl text-primary font-semibold tracking-tight mb-2">
