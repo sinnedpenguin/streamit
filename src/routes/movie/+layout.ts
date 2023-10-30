@@ -1,4 +1,4 @@
-import type { LayoutLoad } from './[id]/$types';
+import type { LayoutLoad } from "./$types";
 
 export const load = (async ({ fetch, params }) => {
 	const fetchDetails = async () => {
@@ -8,19 +8,19 @@ export const load = (async ({ fetch, params }) => {
     return data;
   }
 
-  const fetchRecommendations = async (id: string) => {
+  const fetchRecommendations = async (id: string | undefined) => {
     const res = await fetch(`https://api.themoviedb.org/3/movie/${id}/recommendations?api_key=${import.meta.env.VITE_TMDB_API_KEY}&language=en-US`);
     const data = await res.json();
     return data.results; 
   }
-
-  const fetchSimilar = async (id: string) => {
+  
+  const fetchSimilar = async (id: string | undefined) => {
     const res = await fetch(`https://api.themoviedb.org/3/movie/${id}/similar?api_key=${import.meta.env.VITE_TMDB_API_KEY}&language=en-US`);
     const data = await res.json();
     return data.results; 
   }
-
-  const fetchCasts = async (id: string) => {
+  
+  const fetchCasts = async (id: string | undefined) => {
     const res = await fetch(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=${import.meta.env.VITE_TMDB_API_KEY}&language=en-US`);
     const data = await res.json();
     return data.cast;
