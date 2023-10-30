@@ -71,7 +71,6 @@
         {
           html: 'Subtitle',
           selector: subtitles.map((subtitle) => ({
-            default: subtitle.lang === 'English',
             html: subtitle.lang,
             url: subtitle.url,
           })),
@@ -85,10 +84,6 @@
         },
       ],
     });
-    const englishSubtitle = subtitles.find((s) => s.lang === 'English');
-    if (englishSubtitle) {
-      art?.subtitle.switch(englishSubtitle.url);
-    }
   });
 
   onDestroy(() => {

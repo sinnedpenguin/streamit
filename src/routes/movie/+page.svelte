@@ -28,7 +28,7 @@
   <h3 class="scroll-m-20 text-2xl text-primary font-semibold tracking-tight mb-2">
     Popular <span class="text-white">Movies</span> 
   </h3>
-  <div class="grid grid-cols-2 gap-[0.1rem] sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+  <div class="grid grid-cols-2 gap-[0.1rem] sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-7">
     {#each popularMovies as popularMovie (popularMovie.id)}
       <a href="movie/{popularMovie.id}"> 
         <img 

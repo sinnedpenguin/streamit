@@ -40,7 +40,7 @@ export const options = {
     }, 
   
     3000: { 
-      perPage: 5,
+      perPage: 7,
     } 
   }
 } 
