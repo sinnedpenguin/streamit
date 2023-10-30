@@ -1,4 +1,4 @@
-import type { PageLoad } from './$types';
+import type { LayoutLoad } from './[id]/$types';
 
 export const load = (async ({ fetch, params }) => {
 	const fetchDetails = async () => {
@@ -40,4 +40,4 @@ export const load = (async ({ fetch, params }) => {
     similar,
     casts,
   };
-}) satisfies PageLoad;
+}) satisfies LayoutLoad;

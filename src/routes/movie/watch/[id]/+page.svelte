@@ -4,6 +4,8 @@
 	import { PlayCircle, Star, Clock, Tv } from "lucide-svelte";
 	import Carousel from "$lib/components/carousel.svelte";
   import '@splidejs/svelte-splide/css';
+	import { Splide, SplideSlide } from "@splidejs/svelte-splide";
+	import { options } from "$lib/config/carousel";
 
   export let data: {
     details?: Movie;
@@ -41,23 +43,24 @@
 
 {#if details}
   <section class="container grid items-center">
-    <div class="w-full h-60 sm:h-auto md:h-[50vh] lg:h-[60vh] xl:h-[70vh] relative">
-    {#if !isLoading}
-      <img
-        class="w-full h-full object-cover rounded"
-        src={watchData?.cover || `https://image.tmdb.org/t/p/w500/${details.backdrop_path}`}
-        alt={details.title}
+    {#if watchData}
+      <Videoplayer 
+        url={`${import.meta.env.VITE_WATCH_URL}${watchData.episodeId}?id=${watchData.id}`}
       />
-      <div class="absolute top-0 left-0 w-full h-full" style="background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6));"></div>
-      <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-      <a href="/movie/watch/{details.id}">
-        <PlayCircle class="h-20 w-20 text-primary"/>
-      </a>
+    {:else}
+      <div class="w-full h-60 sm:h-auto md:h-[50vh] lg:h-[60vh] xl:h-[70vh] relative">
+        {#if !isLoading}
+          <img
+            class="w-full h-full object-cover rounded"
+            src={`https://image.tmdb.org/t/p/w500/${details.backdrop_path}`}
+            alt={details.title}
+          />
+          <div class="absolute top-0 left-0 w-full h-full" style="background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6));"></div>
+        {:else}
+          <div class="w-full h-full bg-black"></div>
+        {/if}
       </div>
-      {:else}
-        <div class="w-full h-full bg-black"></div>
-      {/if}
-    </div>
+    {/if}
   </section>
 {/if}
 

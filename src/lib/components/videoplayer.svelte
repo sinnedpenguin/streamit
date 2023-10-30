@@ -1,27 +1,29 @@
 <script lang="ts">
   import { onDestroy, onMount } from 'svelte';
   import Artplayer from 'artplayer';
-  import Hls from 'hls.js';  
+  import Hls from 'hls.js';
   import { options } from '$lib/config/videoplayer';
-	import type { Quality, Subtitle } from '$lib/types/videoplayer';
+  import type { Quality, Subtitle } from '$lib/types/videoplayer';
 
   export let url = '';
   let videoUrl = '';
   let qualityOptions: Quality[];
   let subtitles: Subtitle[];
 
+  let art: Artplayer & { hls?: Hls } | undefined; 
+
   async function fetchVideoUrl() {
-  const response = await fetch(url);
-  const data = await response.json();
-  qualityOptions = data.sources;
-  subtitles = data.subtitles;
-  
-  const autoQualityOption = qualityOptions.find((qualityOption) => qualityOption.quality === 'auto');
+    const response = await fetch(url);
+    const data = await response.json();
+    qualityOptions = data.sources;
+    subtitles = data.subtitles;
+
+    const autoQualityOption = qualityOptions.find((qualityOption) => qualityOption.quality === 'auto');
+
     if (autoQualityOption) {
       videoUrl = autoQualityOption.url;
-      console.log(videoUrl);
     } else {
-      videoUrl = data.sources[0].url; 
+      videoUrl = data.sources[0].url;
     }
   }
 
@@ -34,13 +36,11 @@
       art.hls = hls;
       art.on('destroy', () => hls.destroy());
     } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-        video.src = url;
+      video.src = url;
     } else {
-        art.notice.show = 'Unsupported playback format: m3u8';
+      art.notice.show = 'Unsupported playback format: m3u8';
     }
   }
-
-  let art: Artplayer & { hls?: Hls } | undefined;
 
   onMount(async () => {
     await fetchVideoUrl();
@@ -73,7 +73,7 @@
           selector: subtitles.map((subtitle) => ({
             default: subtitle.lang === 'English',
             html: subtitle.lang,
-            url: subtitle.url
+            url: subtitle.url,
           })),
           onSelect: (item) => {
             const subtitle = subtitles.find((s) => s.lang === item.html);
@@ -81,9 +81,9 @@
               art?.subtitle.switch(item.url);
               return item.html;
             }
-          }
-        }
-      ]
+          },
+        },
+      ],
     });
     const englishSubtitle = subtitles.find((s) => s.lang === 'English');
     if (englishSubtitle) {

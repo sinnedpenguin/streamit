@@ -1,6 +1,6 @@
 import { writable } from 'svelte/store';
 
-function createPage() {
+function createPageStore() {
   const { subscribe, set } = writable(1);
 
   return {
@@ -9,4 +9,4 @@ function createPage() {
   };
 }
 
-export const page = createPage();
+export const page = createPageStore();
