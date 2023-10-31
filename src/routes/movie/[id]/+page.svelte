@@ -1,5 +1,4 @@
 <script lang="ts">
-	import Videoplayer from "$lib/components/videoplayer.svelte";
 	import type { Movie, Cast } from "$lib/types/movie";
 	import { PlayCircle, Star, Clock, Tv } from "lucide-svelte";
 	import Carousel from "$lib/components/carousel.svelte";
