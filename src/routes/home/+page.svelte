@@ -1,6 +1,7 @@
 <script lang="ts">
   import Carousel from "$lib/components/carousel.svelte";
 	import Button from "$lib/components/ui/button/button.svelte";
+	import Skeleton from "$lib/components/ui/skeleton/skeleton.svelte";
 	import type { Movie } from "$lib/types/movie";
 	import type { TV } from "$lib/types/tv";
 	import { Splide, SplideSlide } from "@splidejs/svelte-splide";
@@ -44,7 +45,10 @@
   onMount(fetchData);
 </script>
 
-<section class="container grid items-center">
+<section class="container grid items-center mt-4">
+  {#if isLoading}
+    <Skeleton class="w-full h-60 sm:h-auto md:h-[50vh] lg:h-[60vh] xl:h-[70vh]"></Skeleton>
+  {:else}
   <Splide options={{
       type: "loop", 
       autoplay: true, 
@@ -56,10 +60,10 @@
     >
     {#each trendingMovies.slice(0, 5) as movie}
       <SplideSlide>
-        <div class="w-full h-60 sm:h-auto md:h-[50vh] lg:h-[60vh] xl:h-[70vh] relative mt-4">
+        <div class="w-full h-60 sm:h-auto md:h-[50vh] lg:h-[60vh] xl:h-[70vh] relative">
           <img
-            class="w-full h-full object-cover"
-            src={movie.cover}
+            class="w-full h-full object-cover rounded"
+            src={movie.cover || `https://image.tmdb.org/t/p/w500/${movie.backdrop_path}`}
             alt={movie.title}
           />
           <div class="absolute inset-0 bg-black opacity-60"></div> 
@@ -94,6 +98,7 @@
       </SplideSlide>
     {/each}
   </Splide>
+  {/if}
 </section>
 
 <section class="container grid items-center gap-2 md:py-2 mt-4">

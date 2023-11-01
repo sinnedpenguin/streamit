@@ -4,6 +4,7 @@
 	import { Star, Clock, Tv } from "lucide-svelte";
 	import Carousel from "$lib/components/carousel.svelte";
   import '@splidejs/svelte-splide/css';
+  import { Skeleton } from "$lib/components/ui/skeleton";
 
   export let data: {
     details?: Movie;
@@ -55,7 +56,7 @@
           />
           <div class="absolute top-0 left-0 w-full h-full" style="background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6));"></div>
         {:else}
-          <div class="w-full h-full bg-black"></div>
+          <Skeleton class="w-full h-full"></Skeleton>
         {/if}
       </div>
     {/if}
