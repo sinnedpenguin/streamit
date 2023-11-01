@@ -40,7 +40,7 @@
 </script>
 
 {#if details}
-  <section class="container grid items-center">
+  <section class="container grid items-center mt-4">
     {#if watchData}
       <Videoplayer 
         url={`${import.meta.env.VITE_WATCH_URL}${watchData.episodeId}?id=${watchData.id}`}

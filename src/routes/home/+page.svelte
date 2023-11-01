@@ -56,7 +56,7 @@
     >
     {#each trendingMovies.slice(0, 5) as movie}
       <SplideSlide>
-        <div class="w-full h-60 sm:h-auto md:h-[50vh] lg:h-[60vh] xl:h-[70vh] relative">
+        <div class="w-full h-60 sm:h-auto md:h-[50vh] lg:h-[60vh] xl:h-[70vh] relative mt-4">
           <img
             class="w-full h-full object-cover"
             src={movie.cover}
@@ -65,21 +65,19 @@
           <div class="absolute inset-0 bg-black opacity-60"></div> 
           {#if !isLoading}
             <div class="absolute bottom-0 left-0 text-white p-4 text-xl mx-4">
-              <h1 class="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl text-primary">{movie.title}</h1>
+              <h1 class="mt-2 text-lg font-extrabold tracking-tight text-primary md:text-3xl lg:text-3xl">{movie.title}</h1>
               <span class="flex items-center mt-4">
                 <Tv class="h-4 w-4 mr-2 text-primary"/>
-                <small>MOVIE</small>
+                <p class="text-sm">MOVIE</p>
                 <Star class="h-4 w-4 mx-2 text-primary"/>
-                <small>{movie.vote_average.toFixed(1)}</small>
+                <p class="text-sm">{movie.vote_average.toFixed(1)}</p>
                 <Clock class="h-4 w-4 mx-2 text-primary"/>
-                <small>{formatRuntime(movie.runtime)}</small>
+                <p class="text-sm">{formatRuntime(movie.runtime)}</p>
               </span>
-              <small>  
-                <blockquote class="italic">
+                <blockquote class="text-sm italic">
                   {movie.tagline || ''}
                 </blockquote>
-              </small>
-              <small>{movie.overview}</small>
+              <p class="mt-2 line-clamp-2 overflow-hidden text-ellipsis text-sm">{movie.overview}</p>
               <div class="flex space-x-2 mt-4">
                 <a href="/movie/{movie.id}"> 
                   <Button>
@@ -95,9 +93,6 @@
         </div>
       </SplideSlide>
     {/each}
-    <div class="splide__progress">
-      <div class="splide__progress__bar" />
-    </div>
   </Splide>
 </section>
 

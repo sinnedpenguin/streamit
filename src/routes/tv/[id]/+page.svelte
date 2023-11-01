@@ -33,7 +33,7 @@
 </script>
 
 {#if details}
-  <section class="container grid items-center">
+  <section class="container grid items-center mt-4">
     <div class="w-full h-60 sm:h-auto md:h-[50vh] lg:h-[60vh] xl:h-[70vh] relative">
     {#if !isLoading}
       <img
@@ -52,10 +52,7 @@
       {/if}
     </div>
   </section>
-{/if}
-
-{#if details}
-	<div class="container grid items-center gap-4 pb-8 pt-6 md:py-2 relative">
+  <div class="container grid items-center gap-4 pb-8 pt-6 md:py-2 relative">
 		<h1 class="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl text-primary">{details?.name || 'N/A'}</h1>
 		<span class="flex items-center">
 			<Tv class="h-4 w-4 mr-2 text-primary"/>
@@ -92,25 +89,22 @@
       {/each}
     </div>
   </div>
-  <div class="container grid items-center mt-4">
+  <div class="container">
     {#each watchData.seasons as season (season.season)}
       {#if selectedSeason === season.season}
-        <div class="mb-8">
-          <div class="grid grid-cols-1">
+        <div class="my-8">
+          <div class="grid grid-cols-1 gap-2">
             {#each season.episodes as episode (season.season + '-' + episode.episode)}
-              <div class="p-1 shadow-md flex space-x-4 items-center">
-                {#if episode.img && episode.img.mobile}
-                  <img src={episode.img.mobile} alt={episode.title} />
-                {/if}
-                <div class="w-3/4">
-                  <p>
-                    {episode.title}
-                  </p>
-                  <p>
-                    {episode.releaseDate}
-                  </p>
-                </div>
+            <div class="flex items-start space-x-4">
+              {#if episode.img && episode.img.mobile}
+                <img class="w-36 h-20 object-cover sm:w-64 sm:h-36" src={episode.img.mobile} alt={episode.title}/>
+              {/if}
+              <div class="flex-grow">
+                <small>S{season.season}/EP{episode.episode}</small>
+                <p class="text-md text-primary font-semibold">{episode.title}</p>
+                <p class="text-sm hidden sm:inline-block">{episode.description}</p>
               </div>
+            </div>
             {/each}
           </div>
         </div>

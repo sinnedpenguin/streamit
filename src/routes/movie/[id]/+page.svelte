@@ -39,7 +39,7 @@
 </script>
 
 {#if details}
-  <section class="container grid items-center">
+  <section class="container grid items-center mt-4">
     <div class="w-full h-60 sm:h-auto md:h-[50vh] lg:h-[60vh] xl:h-[70vh] relative">
     {#if !isLoading}
       <img
