@@ -15,6 +15,7 @@ export type TV = {
   number_of_episodes: number;
   first_air_date: string;
   genres: Genre[];
+  casts: Cast[];
   seasons: Season[];
   url: string;
 };
@@ -38,7 +39,7 @@ type Season = {
   poster_path: string; 
   season_number: number; 
   vote_average: number; 
-  season: string;
+  season: number;
   episodes: Episode[];
 };
 
@@ -48,8 +49,8 @@ export type Episode = {
   releaseDate: string;
   title: string; 
   description: string; 
-  season_number: number; 
   img: {
     mobile: string;
   }
+  url: string;
 };

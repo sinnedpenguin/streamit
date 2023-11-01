@@ -5,6 +5,8 @@
 	import Carousel from "$lib/components/carousel.svelte";
   import '@splidejs/svelte-splide/css';
   import { Skeleton } from "$lib/components/ui/skeleton";
+  import { page } from "$app/stores";
+	import { Button } from "$lib/components/ui/button";
 
   export let data: {
     details?: TV;
@@ -17,24 +19,15 @@
 
   let watchData: TV | undefined;
   let isLoading = true;
+  let episodeId = $page.url.searchParams.get('id');
+  let selectedSeason: number = 1; 
 
   const fetchData = async () => {
     isLoading = true;
     const res = await fetch(`${import.meta.env.VITE_DETAILS_URL}${details?.id}?type=tv`);
     watchData = await res.json();
-    console.log(details?.id);
-    console.log(watchData?.id);
-    console.log('watchData:', watchData); 
     isLoading = false;
-  };
-
-  const formatRuntime = (runtime: number | undefined) => {
-    if (runtime === undefined) {
-      return 'N/A';
-    }
-    const hours = Math.floor(runtime / 60);
-    const minutes = runtime % 60;
-    return `${hours}h ${minutes}m`;
+    selectedSeason = 1; 
   };
 
   $: {
@@ -47,7 +40,7 @@
   <section class="container grid items-center mt-4">
     {#if watchData}
       <Videoplayer 
-        url={`${import.meta.env.VITE_WATCH_URL}${watchData.id}?id=${watchData.id}`}
+        url={`${import.meta.env.VITE_WATCH_URL}${episodeId}?id=${watchData.id}`}
       />
     {:else}
       <div class="w-full h-60 sm:h-auto md:h-[50vh] lg:h-[60vh] xl:h-[70vh] relative">
@@ -64,36 +57,90 @@
       </div>
     {/if}
   </section>
-{/if}
 
-<div class="container grid items-center gap-4 pb-8 pt-6 md:py-2 relative">
-  <h1 class="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl text-primary">{details?.name || 'N/A'}</h1>
-  <span class="flex items-center">
-    <Tv class="h-4 w-4 mr-2 text-primary"/>
-    TV
-    <Star class="h-4 w-4 mx-2 text-primary"/>
-    {details?.vote_average.toFixed(1)}
-    <Clock class="h-4 w-4 mx-2 text-primary"/>
-    {details?.number_of_seasons} SS / {details?.number_of_episodes} EPs
-  </span>
-  <blockquote class="italic">
-    {details?.tagline || ''}
-  </blockquote>
-  <p>{details?.overview || ''}</p>
-  <p>Released: {details?.first_air_date}</p>
-  <p>Genres: {details?.genres.map(genre => genre.name).join(', ')}</p>
-  <p>Casts: {casts.slice(0, 5).map(cast => cast.name).join(', ')}</p>
-</div>
+  <div class="container grid items-center gap-4 pb-8 pt-6 md:py-2 relative">
+		<h1 class="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl text-primary">{details?.name || 'N/A'}</h1>
+		<span class="flex items-center">
+			<Tv class="h-4 w-4 mr-2 text-primary"/>
+			TV
+			<Star class="h-4 w-4 mx-2 text-primary"/>
+			{details?.vote_average.toFixed(1)}
+			<Clock class="h-4 w-4 mx-2 text-primary"/>
+			{details?.number_of_seasons} SS / {details?.number_of_episodes} EPs
+		</span>
+		<blockquote class="italic">
+			{details?.tagline || ''}
+		</blockquote>
+		<p>{details?.overview || ''}</p>
+		<p>Released: {details?.first_air_date}</p>
+		<p>Genres: {details?.genres.map(genre => genre.name).join(', ')}</p>
+		<p>Casts: {casts.slice(0, 5).map(cast => cast.name).join(', ')}</p>
+	</div>
 
-{#if ((recommendations && recommendations.length > 0) || (similar && similar.length > 0))}
-  <div class="container grid items-center gap-4 pb-8 pt-6 md:py-2 relative mt-8">
-    <h3 class="scroll-m-20 text-2xl text-primary font-semibold tracking-tight mb-2">
-      You may also like:
+  <div id="seasons-section" class="container grid items-center mt-8">
+    <h3 class="scroll-m-20 text-2xl text-primary font-semibold tracking-tight mb-4">
+      Seasons:
     </h3>
-    {#if recommendations && recommendations.length > 0}
-      <Carousel items={recommendations} url="/tv" title="name" />
-    {:else}
-      <Carousel items={similar} url="/tv" title="name" />
-    {/if}
   </div>
+
+  {#if isLoading}
+    <div class="container flex items-center space-x-1 overflow-x-auto">
+      {#each Array(details?.number_of_seasons) as _, i}
+        <Skeleton class="w-12 h-10" /> 
+      {/each}
+    </div> 
+  {:else}
+    {#if watchData}
+      <div class="container grid items-center">
+        <div class="flex space-x-1 overflow-x-auto">
+          {#each watchData.seasons as season (season.season)}
+            <Button
+              variant="outline"
+              class="whitespace-nowrap hover:text-white"
+              on:click={() => selectedSeason = season.season}
+            >
+              S{season.season}
+            </Button>
+          {/each}
+        </div>
+      </div>
+      <div class="container">
+        {#each watchData.seasons as season (season.season)}
+          {#if selectedSeason === season.season}
+            <div class="my-8">
+              <div class="grid grid-cols-1 gap-2">
+                {#each season.episodes as episode (season.season + '-' + episode.episode)}
+                  <a href={`/tv/watch/${details.id}?season=${season.season}&episode=${episode.episode}&id=${episode.id}`}>
+                    <div class="flex items-start space-x-4 hover:bg-secondary rounded p-2">
+                      {#if episode.img && episode.img.mobile}
+                        <img class="w-36 h-20 object-cover sm:w-64 sm:h-36" src={episode.img.mobile} alt={episode.title}/>
+                      {/if}
+                      <div class="flex-grow">
+                        <small>S{season.season} / EP{episode.episode}</small>
+                        <p class="text-md text-primary font-semibold">{episode.title}</p>
+                        <p class="text-sm hidden sm:inline-block">{episode.description}</p>
+                      </div>
+                    </div>
+                  </a>
+                {/each}
+              </div>
+            </div>
+          {/if}
+        {/each}
+      </div>
+    {/if}
+  {/if}
+  
+  {#if ((recommendations && recommendations.length > 0) || (similar && similar.length > 0))}
+    <div class="container grid items-center gap-4 pb-8 pt-6 md:py-2 relative mt-8">
+      <h3 class="scroll-m-20 text-2xl text-primary font-semibold tracking-tight mb-2">
+        You may also like:
+      </h3>
+      {#if recommendations && recommendations.length > 0}
+        <Carousel items={recommendations} url="/tv" title="name" />
+      {:else}
+        <Carousel items={similar} url="/tv" title="name" />
+      {/if}
+    </div>
+  {/if}
 {/if}

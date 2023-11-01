@@ -3,7 +3,7 @@
   import { PlayCircle, Star, Clock, Tv } from "lucide-svelte";
   import Carousel from "$lib/components/carousel.svelte";
   import '@splidejs/svelte-splide/css';
-	import { Button } from "$lib/components/ui/button";
+  import { Button } from "$lib/components/ui/button";
   import { Skeleton } from "$lib/components/ui/skeleton";
 
   export let data: {
@@ -17,7 +17,7 @@
 
   let watchData: TV | undefined;
   let isLoading = true;
-  let selectedSeason: string = '1';
+  let selectedSeason: number = 1; 
 
   const fetchData = async () => {
     isLoading = true;
@@ -25,6 +25,14 @@
     watchData = await res.json();
     console.log(watchData?.seasons);
     isLoading = false;
+    selectedSeason = 1; 
+  };
+
+  const scrollToSeasons = () => {
+    const seasonsSection = document.getElementById('seasons-section');
+    if (seasonsSection) {
+      seasonsSection.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   $: {
@@ -44,15 +52,16 @@
         />
         <div class="absolute top-0 left-0 w-full h-full" style="background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6));"></div>
         <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-        <a href="/tv/watch/{details.id}">
-          <PlayCircle class="h-20 w-20 text-primary"/>
-        </a>
+          <button on:click={scrollToSeasons}>
+            <PlayCircle class="h-20 w-20 text-primary" />
+          </button>
         </div>
         {:else}
           <Skeleton class="w-full h-full"></Skeleton>
       {/if}
     </div>
   </section>
+
   <div class="container grid items-center gap-4 pb-8 pt-6 md:py-2 relative">
 		<h1 class="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl text-primary">{details?.name || 'N/A'}</h1>
 		<span class="flex items-center">
@@ -71,12 +80,13 @@
 		<p>Genres: {details?.genres.map(genre => genre.name).join(', ')}</p>
 		<p>Casts: {casts.slice(0, 5).map(cast => cast.name).join(', ')}</p>
 	</div>
-  <div class="container grid items-center mt-8">
+
+  <div id="seasons-section" class="container grid items-center mt-8">
     <h3 class="scroll-m-20 text-2xl text-primary font-semibold tracking-tight mb-4">
       Seasons:
     </h3>
   </div>
-  
+
   {#if isLoading}
     <div class="container flex items-center space-x-1 overflow-x-auto">
       {#each Array(details?.number_of_seasons) as _, i}
@@ -104,16 +114,18 @@
             <div class="my-8">
               <div class="grid grid-cols-1 gap-2">
                 {#each season.episodes as episode (season.season + '-' + episode.episode)}
-                <div class="flex items-start space-x-4">
-                  {#if episode.img && episode.img.mobile}
-                    <img class="w-36 h-20 object-cover sm:w-64 sm:h-36" src={episode.img.mobile} alt={episode.title}/>
-                  {/if}
-                  <div class="flex-grow">
-                    <small>S{season.season} / EP{episode.episode}</small>
-                    <p class="text-md text-primary font-semibold">{episode.title}</p>
-                    <p class="text-sm hidden sm:inline-block">{episode.description}</p>
-                  </div>
-                </div>
+                  <a href={`/tv/watch/${details.id}?season=${season.season}&episode=${episode.episode}&id=${episode.id}`}>
+                    <div class="flex items-start space-x-4 hover:bg-secondary rounded p-2">
+                      {#if episode.img && episode.img.mobile}
+                        <img class="w-36 h-20 object-cover sm:w-64 sm:h-36" src={episode.img.mobile} alt={episode.title}/>
+                      {/if}
+                      <div class="flex-grow">
+                        <small>S{season.season} / EP{episode.episode}</small>
+                        <p class="text-md text-primary font-semibold">{episode.title}</p>
+                        <p class="text-sm hidden sm:inline-block">{episode.description}</p>
+                      </div>
+                    </div>
+                  </a>
                 {/each}
               </div>
             </div>
