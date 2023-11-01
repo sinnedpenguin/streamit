@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Videoplayer from "$lib/components/videoplayer.svelte";
-	import type { TV, Cast } from "$lib/types/tv";
+	import type { TV } from "$lib/types/tv";
 	import { Star, Clock, Tv } from "lucide-svelte";
 	import Carousel from "$lib/components/carousel.svelte";
   import '@splidejs/svelte-splide/css';
@@ -10,7 +10,7 @@
     details?: TV;
     recommendations: TV[];
     similar: TV[];
-    casts: Cast[];
+    casts: TV[];
   };
 
   let { details, recommendations, similar, casts } = data;

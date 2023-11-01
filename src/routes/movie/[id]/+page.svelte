@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Movie, Cast } from "$lib/types/movie";
+	import type { Movie } from "$lib/types/movie";
 	import { PlayCircle, Star, Clock, Tv } from "lucide-svelte";
 	import Carousel from "$lib/components/carousel.svelte";
   import '@splidejs/svelte-splide/css';
@@ -9,7 +9,7 @@
     details?: Movie;
     recommendations: Movie[];
     similar: Movie[];
-    casts: Cast[];
+    casts: Movie[];
   };
 
   let { details, recommendations, similar, casts } = data;

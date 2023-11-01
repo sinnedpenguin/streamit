@@ -14,6 +14,7 @@ export type Movie = {
   runtime: number;
   release_date: string;
   genres: Genre[];
+  cast: Cast[];
   url: string;
 };
 
@@ -22,7 +23,7 @@ type Genre = {
   name: string;
 };
 
-export type Cast = {
+type Cast = {
   id: string;
   name: string;
 }

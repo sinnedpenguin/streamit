@@ -1,16 +1,17 @@
 <script lang="ts">
 	import Videoplayer from "$lib/components/videoplayer.svelte";
-	import type { Movie, Cast } from "$lib/types/movie";
+	import type { Movie } from "$lib/types/movie";
 	import { Star, Clock, Tv } from "lucide-svelte";
 	import Carousel from "$lib/components/carousel.svelte";
   import '@splidejs/svelte-splide/css';
   import { Skeleton } from "$lib/components/ui/skeleton";
+  import NotAvailable from "$lib/components/not-available.svelte";
 
   export let data: {
     details?: Movie;
     recommendations: Movie[];
     similar: Movie[];
-    casts: Cast[];
+    casts: Movie[];
   };
 
   let { details, recommendations, similar, casts } = data;
@@ -43,9 +44,13 @@
 {#if details}
   <section class="container grid items-center mt-4">
     {#if watchData}
+      {#if watchData.episodeId !== undefined}
       <Videoplayer 
         url={`${import.meta.env.VITE_WATCH_URL}${watchData.episodeId}?id=${watchData.id}`}
       />
+      {:else}
+        <NotAvailable />
+      {/if}
     {:else}
       <div class="w-full h-60 sm:h-auto md:h-[50vh] lg:h-[60vh] xl:h-[70vh] relative">
         {#if !isLoading}

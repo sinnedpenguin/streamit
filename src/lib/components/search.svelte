@@ -37,6 +37,8 @@
                 >
                   {#if result.poster_path}
                     <img src={`https://image.tmdb.org/t/p/w500${result.poster_path}`} alt="" class="w-10 h-auto" />
+                    {:else}
+                    <div class="w-10 h-auto bg-black-200"></div>
                   {/if}
                   <div>
                     <div><small>{result.media_type === 'movie' ? result.title : result.name}</small></div>

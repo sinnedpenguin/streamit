@@ -24,7 +24,7 @@ type Genre = {
   name: string;
 };
 
-export type Cast = {
+type Cast = {
   id: string;
   name: string;
 }
