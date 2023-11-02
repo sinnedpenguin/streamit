@@ -1,11 +1,11 @@
 <script lang="ts">
-	import Videoplayer from "$lib/components/videoplayer.svelte";
 	import type { Movie } from "$lib/types/movie";
 	import { Star, Clock, Tv } from "lucide-svelte";
 	import Carousel from "$lib/components/carousel.svelte";
   import '@splidejs/svelte-splide/css';
   import { Skeleton } from "$lib/components/ui/skeleton";
   import NotAvailable from "$lib/components/not-available.svelte";
+	import VideoPlayer from "$lib/components/videoplayer.svelte";
 
   export let data: {
     details?: Movie;
@@ -45,7 +45,7 @@
   <section class="container grid items-center mt-4">
     {#if watchData}
       {#if watchData.episodeId !== undefined}
-      <Videoplayer 
+      <VideoPlayer 
         url={`${import.meta.env.VITE_WATCH_URL}${watchData.episodeId}?id=${watchData.id}`}
       />
       {:else}

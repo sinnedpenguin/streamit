@@ -1,12 +1,13 @@
 <script lang="ts">
-	import Videoplayer from "$lib/components/videoplayer.svelte";
 	import type { TV } from "$lib/types/tv";
 	import { Star, Clock, Tv } from "lucide-svelte";
 	import Carousel from "$lib/components/carousel.svelte";
   import '@splidejs/svelte-splide/css';
   import { Skeleton } from "$lib/components/ui/skeleton";
-  import { page } from "$app/stores";
 	import { Button } from "$lib/components/ui/button";
+	import VideoPlayer from "$lib/components/videoplayer.svelte";
+  import { episode } from "$lib/stores/episode";
+  import { onDestroy } from 'svelte';
 
   export let data: {
     details?: TV;
@@ -19,8 +20,12 @@
 
   let watchData: TV | undefined;
   let isLoading = true;
-  let episodeId = $page.url.searchParams.get('id');
   let selectedSeason: number = 1; 
+  let episodeId: number | null;
+
+  const unsubscribe = episode.subscribe(value => {
+    episodeId = value;
+  });
 
   const fetchData = async () => {
     isLoading = true;
@@ -30,18 +35,26 @@
     selectedSeason = 1; 
   };
 
+  const selectEpisode = (id: number) => {
+    episode.setEpisode(id);
+  };
+
   $: {
     ({ details, recommendations, similar, casts } = data);
     fetchData();
   }
+  
+  onDestroy(unsubscribe);
 </script>
 
 {#if details}
   <section class="container grid items-center mt-4">
     {#if watchData}
-      <Videoplayer 
-        url={`${import.meta.env.VITE_WATCH_URL}${episodeId}?id=${watchData.id}`}
-      />
+      {#key episodeId}
+        <VideoPlayer 
+          url={`${import.meta.env.VITE_WATCH_URL}${episodeId}?id=${watchData.id}`}
+        />
+      {/key}
     {:else}
       <div class="w-full h-60 sm:h-auto md:h-[50vh] lg:h-[60vh] xl:h-[70vh] relative">
         {#if !isLoading}
@@ -110,7 +123,7 @@
             <div class="my-8">
               <div class="grid grid-cols-1 gap-2">
                 {#each season.episodes as episode (season.season + '-' + episode.episode)}
-                  <a href={`/tv/watch/${details.id}?season=${season.season}&episode=${episode.episode}&id=${episode.id}`}>
+                <a href={`/tv/watch/${details.id}`} on:click={() => selectEpisode(episode.id)}>
                     <div class="flex items-start space-x-4 hover:bg-secondary rounded p-2">
                       {#if episode.img && episode.img.mobile}
                         <img class="w-36 h-20 object-cover sm:w-64 sm:h-36" src={episode.img.mobile} alt={episode.title}/>

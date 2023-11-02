@@ -5,6 +5,7 @@
   import '@splidejs/svelte-splide/css';
   import { Button } from "$lib/components/ui/button";
   import { Skeleton } from "$lib/components/ui/skeleton";
+  import { episode } from "$lib/stores/episode";
 
   export let data: {
     details?: TV;
@@ -33,6 +34,10 @@
     if (seasonsSection) {
       seasonsSection.scrollIntoView({ behavior: 'smooth' });
     }
+  };
+
+  const selectEpisode = (id: number) => {
+    episode.setEpisode(id);
   };
 
   $: {
@@ -114,7 +119,7 @@
             <div class="my-8">
               <div class="grid grid-cols-1 gap-2">
                 {#each season.episodes as episode (season.season + '-' + episode.episode)}
-                  <a href={`/tv/watch/${details.id}?season=${season.season}&episode=${episode.episode}&id=${episode.id}`}>
+                <a href={`/tv/watch/${details.id}`} on:click={() => selectEpisode(episode.id)}>
                     <div class="flex items-start space-x-4 hover:bg-secondary rounded p-2">
                       {#if episode.img && episode.img.mobile}
                         <img class="w-36 h-20 object-cover sm:w-64 sm:h-36" src={episode.img.mobile} alt={episode.title}/>
