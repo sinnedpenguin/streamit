@@ -1,10 +1,11 @@
 <script lang="ts">
-	import type { Media } from "$lib/types/media";
-	import { Input } from "./ui/input";
+  import type { Media } from "$lib/types/media";
+  import { Input } from "./ui/input";
   import { SearchIcon } from "lucide-svelte"
 
   let query = '';
   let results: Media[] = [];
+  let debounceTimeout: number | undefined;
 
   const fetchData = async () => {
     const res = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=${import.meta.env.VITE_TMDB_API_KEY}&query=${query}`);
@@ -13,7 +14,21 @@
     results = data.results.filter((result: any) => result.media_type !== 'person');
   };
 
-  $: fetchData(), query;
+  const debounceSearch = () => {
+    clearTimeout(debounceTimeout);
+    debounceTimeout = setTimeout(() => {
+      if (query !== '') {
+        fetchData();
+      }
+    }, 500); 
+  };
+
+  const clearInputAndResults = () => {
+    query = '';
+    results = [];
+  };
+
+  $: debounceSearch(), query;
 </script>
 
 <form class="flex w-full max-w-sm items-center space-x-2">
@@ -32,7 +47,7 @@
                   class="flex items-center space-x-2 w-full"
                   href={`/${result.media_type}/${result.id}`} 
                   on:click={() => {
-                    query = ''; 
+                    clearInputAndResults();
                   }}
                 >
                   {#if result.poster_path}

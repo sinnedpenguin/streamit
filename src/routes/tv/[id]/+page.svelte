@@ -86,7 +86,9 @@
 		<p>Casts: {casts.slice(0, 5).map(cast => cast.name).join(', ')}</p>
 	</div>
 
-  <div id="seasons-section" class="container grid items-center mt-8">
+  <div id="seasons-section"></div>
+
+  <div class="container grid items-center mt-8">
     <h3 class="scroll-m-20 text-2xl text-primary font-semibold tracking-tight mb-4">
       Seasons:
     </h3>
