@@ -11,7 +11,7 @@
     const res = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=${import.meta.env.VITE_TMDB_API_KEY}&query=${query}`);
     const data = await res.json();
 
-    results = data.results.filter((result: any) => result.media_type !== 'person');
+    results = data.results.filter((result: { media_type: string; }) => result.media_type !== 'person');
   };
 
   const debounceSearch = () => {

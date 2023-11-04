@@ -44,7 +44,6 @@ type Season = {
 };
 
 export type Episode = {
-  [x: string]: any;
   id: number; 
   episode: number;
   releaseDate: string;

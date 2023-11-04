@@ -25,7 +25,7 @@ export type Options = {
   moreVideoAttr?: {
     crossOrigin?: string;
   },
-  customType: any;
+  customType: string;
   type: string;
 };
 

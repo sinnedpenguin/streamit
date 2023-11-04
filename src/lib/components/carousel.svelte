@@ -13,7 +13,7 @@
   {#each items as item (item.id)}
     <SplideSlide>
       <a href="{`${url}/${item.id}`}">
-        <img src={`https://image.tmdb.org/t/p/w500${item.poster_path}`} alt={item[title]} />
+        <img src={`https://image.tmdb.org/t/p/w500${item.poster_path}`} alt={item[title]} class="object-cover transition-all hover:scale-105"/>
       </a>
     </SplideSlide>
   {/each}

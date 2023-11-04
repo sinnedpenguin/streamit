@@ -96,7 +96,7 @@
 
   {#if isLoading}
     <div class="container flex items-center space-x-1 overflow-x-auto">
-      {#each Array(details?.number_of_seasons) as _, i}
+      {#each Array(details?.number_of_seasons) as _}
         <Skeleton class="w-12 h-10" /> 
       {/each}
     </div> 
