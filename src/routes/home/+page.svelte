@@ -72,16 +72,16 @@
               <h1 class="mt-2 text-lg font-extrabold tracking-tight text-primary md:text-3xl lg:text-3xl">{movie.title}</h1>
               <span class="flex items-center mt-4">
                 <Tv class="h-4 w-4 mr-2 text-primary"/>
-                <p class="text-sm">MOVIE</p>
+                <span class="text-sm">MOVIE</span>
                 <Star class="h-4 w-4 mx-2 text-primary"/>
-                <p class="text-sm">{movie.vote_average.toFixed(1)}</p>
+                <span class="text-sm">{movie.vote_average.toFixed(1)}</span>
                 <Clock class="h-4 w-4 mx-2 text-primary"/>
-                <p class="text-sm">{formatRuntime(movie.runtime)}</p>
+                <span class="text-sm">{formatRuntime(movie.runtime)}</span>
               </span>
-                <blockquote class="text-sm italic">
+                <span class="text-sm italic">
                   {movie.tagline || ''}
-                </blockquote>
-              <p class="mt-2 line-clamp-2 overflow-hidden text-ellipsis text-sm">{movie.overview}</p>
+                </span>
+              <span class="mt-2 line-clamp-2 overflow-hidden text-ellipsis text-sm">{movie.overview}</span>
               <div class="flex space-x-2 mt-4">
                 <a href="/movie/{movie.id}"> 
                   <Button>

@@ -7,11 +7,13 @@
 	import PageLoader from "$lib/components/page-loader.svelte";
 
 	onNavigate((navigation) => {
-			// @ts-ignore
+		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+		// @ts-ignore
 		if (!document.startViewTransition) return;
 
 		return new Promise((resolve) => {
-				// @ts-ignore
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore
 			document.startViewTransition(async () => {
 				resolve();
 				await navigation.complete;

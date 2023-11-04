@@ -6,14 +6,14 @@ export type TV = {
   cover: string;
   poster_path: string;
   backdrop_path: string;
-  releaseDate: string;
+  release_date: string;
+  first_air_date: string;
   overview: string;
   tagline: string;
   vote_average: number;
   runtime: number;
   number_of_seasons: number;
   number_of_episodes: number;
-  first_air_date: string;
   genres: Genre[];
   casts: Cast[];
   seasons: Season[];
@@ -53,4 +53,5 @@ export type Episode = {
     mobile: string;
   }
   url: string;
+  season: string;
 };

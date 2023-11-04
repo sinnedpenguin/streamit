@@ -7,15 +7,17 @@ export type Movie = {
   cover: string;
   poster_path: string;
   backdrop_path: string;
-  releaseDate: string;
   overview: string;
   tagline: string;
   vote_average: number;
   runtime: number;
   release_date: string;
+  first_air_date: string;
   genres: Genre[];
   cast: Cast[];
   url: string;
+  number_of_seasons: string;
+  number_of_episodes: string;
 };
 
 type Genre = {
