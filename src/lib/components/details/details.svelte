@@ -3,6 +3,7 @@
   import Title from "./title.svelte";
   import Description from "./description.svelte";
   import Recommendations from "./recommendations.svelte";
+
 </script>
 
 <div class="mt-2">

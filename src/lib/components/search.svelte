@@ -8,8 +8,11 @@
   let debounceTimeout: number | undefined;
 
   const fetchData = async () => {
-    const res = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=${import.meta.env.VITE_TMDB_API_KEY}&query=${query}`);
-    const data = await res.json();
+    const response = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=${import.meta.env.VITE_TMDB_API_KEY}&query=${query}`);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch search data: ${response.status}`);
+    }
+    const data = await response.json();
 
     results = data.results.filter((result: { media_type: string; }) => result.media_type !== 'person');
   };

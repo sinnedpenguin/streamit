@@ -2,11 +2,11 @@ import type { PageServerLoad } from './$types';
 import { TMDB_API_KEY } from '$env/static/private';
 
 const fetchData = async (url: string) => {
-  const res = await fetch(url);
-  if (!res.ok) {
-    throw new Error(`Failed to fetch data: ${res.status}`);
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch data: ${response.status}`);
   }
-  const data = await res.json();
+  const data = await response.json();
   
   return data.results;
 };

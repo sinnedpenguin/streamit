@@ -1,14 +1,14 @@
 <script lang="ts">
 	import type { TV } from "$lib/types/tv";
-	import Carousel from "$lib/components/carousel.svelte";
   import '@splidejs/svelte-splide/css';
   import { Skeleton } from "$lib/components/ui/skeleton";
 	import { Button } from "$lib/components/ui/button";
 	import VideoPlayer from "$lib/components/videoplayer.svelte";
   import { episode } from "$lib/stores/episode";
   import { onDestroy } from 'svelte';
-  import Details from "$lib/components/details.svelte";
-	import Cover from "$lib/components/cover.svelte";
+  import Details from "$lib/components/details/details.svelte";
+  import Cover from "$lib/components/details/cover.svelte";
+  import Recommendations from "$lib/components/details/recommendations.svelte";
 
   export let data: {
     details?: TV;
@@ -30,8 +30,12 @@
 
   const fetchData = async () => {
     isLoading = true;
-    const res = await fetch(`${import.meta.env.VITE_DETAILS_URL}${details?.id}?type=tv`);
-    watchData = await res.json();
+    const response = await fetch(`${import.meta.env.VITE_DETAILS_URL}${details?.id}?type=tv`);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch details: ${response.status}`);
+    }
+    watchData = await response.json();
+
     isLoading = false;
     selectedSeason = 1; 
   };
@@ -127,16 +131,5 @@
     {/if}
   {/if}
   
-  {#if ((recommendations && recommendations.length > 0) || (similar && similar.length > 0))}
-    <div class="container grid items-center gap-4 pb-8 pt-6 md:py-2 relative mt-8">
-      <h3 class="scroll-m-20 text-2xl text-primary font-semibold tracking-tight mb-2">
-        You may also like:
-      </h3>
-      {#if recommendations && recommendations.length > 0}
-        <Carousel items={recommendations} url="/tv" title="name" />
-      {:else}
-        <Carousel items={similar} url="/tv" title="name" />
-      {/if}
-    </div>
-  {/if}
+  <Recommendations {recommendations} {similar} content="tv" />
 {/if}

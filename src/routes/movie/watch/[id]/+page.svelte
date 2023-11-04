@@ -4,8 +4,8 @@
   import { Skeleton } from "$lib/components/ui/skeleton";
   import NotAvailable from "$lib/components/not-available.svelte";
 	import VideoPlayer from "$lib/components/videoplayer.svelte";
-  import Details from "$lib/components/details.svelte";
-  import Cover from "$lib/components/cover.svelte";
+  import Details from "$lib/components/details/details.svelte";
+  import Cover from "$lib/components/details/cover.svelte";
 
   export let data: {
     details?: Movie;
@@ -21,8 +21,11 @@
 
   const fetchData = async () => {
     isLoading = true;
-    const res = await fetch(`${import.meta.env.VITE_DETAILS_URL}${details?.id}?type=movie`);
-    watchData = await res.json();
+    const response = await fetch(`${import.meta.env.VITE_DETAILS_URL}${details?.id}?type=movie`);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch details: ${response.status}`);
+    }
+    watchData = await response.json();
     isLoading = false;
   };
 

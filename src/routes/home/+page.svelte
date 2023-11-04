@@ -20,10 +20,21 @@
 
   const fetchData = async () => {
     const requests = trendingMovies.map(async (movie, i) => {
-      const res1 = fetch(`https://api.themoviedb.org/3/movie/${movie.id}?api_key=${import.meta.env.VITE_TMDB_API_KEY}`);
-      const res2 = fetch(`${import.meta.env.VITE_DETAILS_URL}${movie.id}?type=movie`);
+      const response1 = await fetch(`https://api.themoviedb.org/3/movie/${movie.id}?api_key=${import.meta.env.VITE_TMDB_API_KEY}`);
+      const response2 = await fetch(`${import.meta.env.VITE_DETAILS_URL}${movie.id}?type=movie`);
 
-      const [data1, data2] = await Promise.all([res1, res2].map(async res => (await res).json()));
+      if (!response1.ok) {
+        console.error(`Failed to fetch details: ${response1.status}`);
+        return;
+      }
+      const data1 = await response1.json();
+      
+      if (!response2.ok) {
+        console.error(`Failed to fetch watch data: ${response2.status}`);
+        return;
+      }
+      const data2 = await response2.json();
+
       trendingMovies[i] = { ...movie, ...data2, ...data1 };
     });
 

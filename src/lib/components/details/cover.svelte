@@ -35,7 +35,7 @@
     <div class="absolute top-0 left-0 w-full h-full" style="background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6));"></div>
     <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
       <button on:click={handleClick}>
-        <PlayCircle class="h-20 w-20 text-primary transition-all hover:scale-105"/>
+        <PlayCircle class="h-14 w-14 text-primary transition-all hover:scale-105"/>
       </button>
     </div>
   </div>

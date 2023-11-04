@@ -9,8 +9,11 @@
 
   const fetchData = async () => {
     const pageNumber = $page;
-    const res = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${import.meta.env.VITE_TMDB_API_KEY}&language=en-US&page=${pageNumber}`);
-    const data = await res.json();
+    const response = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${import.meta.env.VITE_TMDB_API_KEY}&language=en-US&page=${pageNumber}`);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch data: ${response.status}`);
+    }
+    const data = await response.json();
 
     popularMovies = data.results;
   };
@@ -24,7 +27,7 @@
   onMount(fetchData);
 </script>
 
-<section class="container grid items-center gap-2 md:py-2 mt-4">
+<section class="container grid items-center gap-2 md:py-2">
   <h3 class="scroll-m-20 text-2xl text-primary font-semibold tracking-tight mb-2">
     Popular <span class="text-white">Movies</span> 
   </h3>

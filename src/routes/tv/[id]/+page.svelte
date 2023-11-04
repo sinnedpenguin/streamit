@@ -4,8 +4,8 @@
   import { Button } from "$lib/components/ui/button";
   import { Skeleton } from "$lib/components/ui/skeleton";
   import { episode } from "$lib/stores/episode";
-  import Details from "$lib/components/details.svelte";
-  import Recommendations from "$lib/components/recommendations.svelte";
+  import Details from "$lib/components/details/details.svelte";
+  import Recommendations from "$lib/components/details/recommendations.svelte";
 
   export let data: {
     details?: TV;
@@ -22,9 +22,11 @@
 
   const fetchData = async () => {
     isLoading = true;
-    const res = await fetch(`${import.meta.env.VITE_DETAILS_URL}${details?.id}?type=tv`);
-    watchData = await res.json();
-    console.log(watchData?.seasons);
+    const response = await fetch(`${import.meta.env.VITE_DETAILS_URL}${details?.id}?type=tv`);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch details: ${response.status}`);
+    }
+    watchData = await response.json();
     isLoading = false;
     selectedSeason = 1; 
   };

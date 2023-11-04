@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Movie } from "$lib/types/movie";
   import '@splidejs/svelte-splide/css';
-  import Details from "$lib/components/details.svelte";
+  import Details from "$lib/components/details/details.svelte";
 	import Skeleton from "$lib/components/ui/skeleton/skeleton.svelte";
 
   export let data: {
@@ -18,8 +18,11 @@
 
   const fetchData = async () => {
     isLoading = true;
-    const res = await fetch(`${import.meta.env.VITE_DETAILS_URL}${details?.id}?type=movie`);
-    watchData = await res.json();
+    const response = await fetch(`${import.meta.env.VITE_DETAILS_URL}${details?.id}?type=movie`);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch details: ${response.status}`);
+    }
+    watchData = await response.json();
     isLoading = false;
   };
 
