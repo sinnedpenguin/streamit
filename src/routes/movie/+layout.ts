@@ -46,18 +46,45 @@ export const load = (async ({ fetch, params }) => {
     return data.cast;
   }
 
+  const fetchGenres = async () => {
+    const response = await fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${import.meta.env.VITE_TMDB_API_KEY}&language=en-US`);
+    if (!response.ok) {
+      console.error(`Failed to fetch genres: ${response.status}`);
+      return null;
+    }
+    const data = await response.json();
+  
+    return data.genres;
+  }
+
+  const fetchMoviesByGenre = async (genreId: number) => {
+    const response = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${import.meta.env.VITE_TMDB_API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${genreId}`);
+    if (!response.ok) {
+      console.error(`Failed to fetch movies for genre ${genreId}: ${response.status}`);
+      return null;
+    }
+    const data = await response.json();
+  
+    return data.results;
+  }
+
   const { id } = params;
-  const [details, recommendations, similar, casts] = await Promise.all([
+  const [details, recommendations, similar, casts, genres] = await Promise.all([
     fetchDetails(),
     fetchRecommendations(id),
     fetchSimilar(id),
     fetchCasts(id),
+    fetchGenres(),
   ]);
-  
+
+  const moviesByGenre = await Promise.all(genres.map((genre: { id: number; }) => fetchMoviesByGenre(genre.id)));
+
   return {
     details,
     recommendations,
     similar,
     casts,
+    genres,
+    moviesByGenre
   };
 }) satisfies LayoutLoad;
