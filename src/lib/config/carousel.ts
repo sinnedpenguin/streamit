@@ -4,7 +4,7 @@ export const options = {
   gap: '0.1rem',
   perMove: 1,
   padding: {
-    right: "0.5rem"
+    right: "1.5rem"
   },
   breakpoints: {
     0: { 

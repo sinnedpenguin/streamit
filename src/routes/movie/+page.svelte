@@ -1,66 +1,43 @@
 <script lang="ts">
   import type { Movie } from "$lib/types/movie";
   import { onMount } from "svelte";
-  import { page } from '$lib/stores/page';
-	import { Button } from "$lib/components/ui/button";
-  import { ChevronLeft, ChevronRight } from "lucide-svelte";
+  import Carousel from "$lib/components/carousel.svelte";
 
-  let popularMovies: Movie[] = [];
+  let genres: {id: number, name: string}[] = [];
+  let movies: Record<string, Movie[]> = {};
+
+  const fetchGenres = async () => {
+    const response = await fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${import.meta.env.VITE_TMDB_API_KEY}`);
+    const data = await response.json();
+    genres = data.genres;
+    for (const genre of genres) {
+      movies[genre.name] = [];
+    }
+  };
 
   const fetchData = async () => {
-    const pageNumber = $page;
-    const response = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${import.meta.env.VITE_TMDB_API_KEY}&language=en-US&page=${pageNumber}`);
-    if (!response.ok) {
-      throw new Error(`Failed to fetch data: ${response.status}`);
+    for (const genre of genres) {
+      const response = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${import.meta.env.VITE_TMDB_API_KEY}&with_genres=${genre.id}`);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch data: ${response.status}`);
+      }
+      const data = await response.json();
+
+      movies[genre.name] = data.results;
     }
-    const data = await response.json();
-
-    popularMovies = data.results;
   };
 
-  const goToPage = (pageNumber: number) => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    page.setPage(pageNumber);
+  onMount(async () => {
+    await fetchGenres();
     fetchData();
-  };
-
-  onMount(fetchData);
+  });
 </script>
 
-<section class="container grid items-center gap-2 md:py-2">
-  <h3 class="scroll-m-20 text-2xl text-primary font-semibold tracking-tight mb-2">
-    Popular <span class="text-white">Movies</span> 
-  </h3>
-  <div class="grid grid-cols-2 gap-[0.1rem] sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-7">
-    {#each popularMovies as popularMovie (popularMovie.id)}
-      <a href="movie/{popularMovie.id}"> 
-        <img 
-          src={`https://image.tmdb.org/t/p/w500${popularMovie.poster_path}`} 
-          alt={popularMovie.title} 
-        />
-      </a>
-    {/each}
-  </div>
-  <div class="flex justify-center mt-6">
-    <Button 
-      variant="ghost"
-      on:click={() => goToPage($page - 1)} disabled={$page === 1} 
-    >
-      <ChevronLeft class="h-4 w-5" />
-    </Button>
-    {#each Array.from({ length: 5 }, (_, i) => $page - 2 + i) as pageNumber}
-      <Button 
-        variant={$page === pageNumber ? 'secondary' : 'ghost'} 
-        on:click={() => goToPage(pageNumber)}
-      >
-        {pageNumber}
-      </Button>
-    {/each}
-    <Button 
-      variant="ghost"
-      on:click={() => goToPage($page + 1)}
-    >
-      <ChevronRight class="h-4 w-5" />
-    </Button>
-  </div>
-</section>
+{#each genres as genre (genre.id)}
+  <section class="container grid items-center mt-2">
+    <h3 class="scroll-m-20 text-2xl text-primary font-semibold tracking-tight mb-2">
+      {genre.name} <span class="text-white">Movies</span> 
+    </h3>
+    <Carousel items={movies[genre.name]} url="movie" title="title" />
+  </section>
+{/each}

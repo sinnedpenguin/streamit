@@ -112,7 +112,7 @@
   {/if}
 </section>
 
-<section class="container grid items-center gap-2 md:py-2 mt-4">
+<section class="container grid items-center mt-4">
   <h3 class="scroll-m-20 text-2xl text-primary font-semibold tracking-tight mb-2">
     Top Rated <span class="text-white">Movies</span> 
   </h3>
