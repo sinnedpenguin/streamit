@@ -58,7 +58,7 @@
 
 <section class="container grid items-center mt-4">
   {#if isLoading}
-    <Skeleton class="w-full h-60 sm:h-auto md:h-[50vh] lg:h-[60vh] xl:h-[70vh]"></Skeleton>
+    <Skeleton class="w-full h-60 sm:h-auto md:h-[50vh] lg:h-[60vh] xl:h-[70vh]" />
   {:else}
   <Splide options={{
       type: "loop", 
