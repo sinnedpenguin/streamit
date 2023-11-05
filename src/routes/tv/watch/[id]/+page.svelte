@@ -9,6 +9,7 @@
   import Details from "$lib/components/details/details.svelte";
   import Cover from "$lib/components/details/cover.svelte";
   import Recommendations from "$lib/components/details/recommendations.svelte";
+	import NotAvailable from "$lib/components/not-available.svelte";
 
   export let data: {
     details?: TV;
@@ -56,9 +57,13 @@
   <section class="container grid items-center mt-4">
     {#if watchData}
       {#key episodeId}
-        <VideoPlayer 
-          url={`${import.meta.env.VITE_WATCH_URL}${episodeId}?id=${watchData.id}`}
-        />
+        {#if watchData.episodeId !== undefined}
+          <VideoPlayer 
+            url={`${import.meta.env.VITE_WATCH_URL}${watchData.episodeId}?id=${watchData.id}`}
+          />
+          {:else}
+            <NotAvailable />
+          {/if}
       {/key}
     {:else}
       <div class="w-full h-60 sm:h-auto md:h-[50vh] lg:h-[60vh] xl:h-[70vh] relative">

@@ -15,8 +15,6 @@
       <Button variant="outline" on:click={() => returnToPreviousPage()}>
         <ChevronLeft class="h-4 w-4 mr-2"/> Previous page
       </Button>
-    </div>
-    <div class="mt-4">
       <a href="/home">
         <Button variant="outline">
           <ChevronLeft class="h-4 w-4 mr-2"/> Homepage
