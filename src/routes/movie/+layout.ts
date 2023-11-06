@@ -46,7 +46,7 @@ export const load = (async ({ fetch, params }) => {
     return data.cast;
   }
 
-  const fetchGenres = async () => {
+  const fetchMoviesGenres = async () => {
     const response = await fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${import.meta.env.VITE_TMDB_API_KEY}&language=en-US`);
     if (!response.ok) {
       console.error(`Failed to fetch genres: ${response.status}`);
@@ -74,7 +74,7 @@ export const load = (async ({ fetch, params }) => {
     fetchRecommendations(id),
     fetchSimilar(id),
     fetchCasts(id),
-    fetchGenres(),
+    fetchMoviesGenres(),
   ]);
 
   const moviesByGenre = await Promise.all(genres.map((genre: { id: number; }) => fetchMoviesByGenre(genre.id)));
