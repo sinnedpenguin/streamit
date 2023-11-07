@@ -5,6 +5,7 @@
 	import { ModeWatcher } from "mode-watcher";
 	import { onNavigate } from '$app/navigation';
 	import PageLoader from "$lib/components/page-loader.svelte";
+	import Breadcrumb from "$lib/components/breadcrumb.svelte";
 
 	onNavigate((navigation) => {
 		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -25,5 +26,6 @@
 <PageLoader />
 <ModeWatcher />
 <SiteHeader />
+<Breadcrumb />
 <slot />
 <SiteFooter />

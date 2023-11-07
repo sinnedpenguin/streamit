@@ -20,7 +20,7 @@
 
 {#if genres}
   {#each genres as genre (genre.id)}
-    <section class="container grid items-center mt-2">
+    <section class="container grid items-center mt-4">
       <h3 class="scroll-m-20 text-2xl text-primary font-semibold tracking-tight mb-2">
         {#if genre.name === "TV Movie"}
           TV <span class="text-white">Movies</span>
