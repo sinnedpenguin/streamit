@@ -42,6 +42,8 @@
                 <div class="flex items-start space-x-4 hover:bg-secondary rounded p-2">
                   {#if episode.img && episode.img.mobile}
                     <img class="w-36 h-20 object-cover sm:w-64 sm:h-36" src={episode.img.mobile} alt={episode.title}/>
+                  {:else}
+                    <img class="w-36 h-20 object-cover sm:w-64 sm:h-36" src={watchData.cover} alt={episode.title} />
                   {/if}
                   <div class="flex-grow">
                     <small>S{season.season} / EP{episode.episode}</small>
