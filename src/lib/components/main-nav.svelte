@@ -23,7 +23,4 @@
     </a>
   {/each}
   <Search />
-  <Button variant="ghost">
-    <User class="h-6 w-6" />
-  </Button>
 </nav>
