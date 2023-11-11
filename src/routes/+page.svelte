@@ -3,8 +3,7 @@
 	import { Tv } from "lucide-svelte";
 </script>
 
-<section 
-	class="h-[80vh] flex items-center justify-center mx-5 mt-2">
+<section class="h-[80vh] flex items-center justify-center mx-5 mt-2">
 	<div class="flex flex-col items-center">
 		<svg
 			xmlns="http://www.w3.org/2000/svg"

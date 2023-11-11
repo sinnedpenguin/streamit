@@ -3,6 +3,7 @@
 	import * as DropdownMenu from "$lib/components/ui/dropdown-menu";
 	import { User } from "lucide-svelte";
 	import { Button } from "../ui/button";
+
 </script>
 
 <div>
@@ -21,8 +22,16 @@
       <DropdownMenu.Group>
         <DropdownMenu.Label>Account</DropdownMenu.Label>
         <DropdownMenu.Separator />
-        <DropdownMenu.Item>Sign in</DropdownMenu.Item>
-        <DropdownMenu.Item>Sign up</DropdownMenu.Item>
+        <DropdownMenu.Item>
+          <a href="/sign-in">
+            Sign in
+          </a>
+        </DropdownMenu.Item>
+        <DropdownMenu.Item>
+          <a href="/sign-up">
+            Sign up
+          </a>
+        </DropdownMenu.Item>
       </DropdownMenu.Group>
     </DropdownMenu.Content>
   </DropdownMenu.Root>
