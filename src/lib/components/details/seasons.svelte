@@ -1,7 +1,8 @@
 <script lang="ts">
-	import type { TV } from "$lib/types/tv";
+  import type { TV } from "$lib/types/tv";
   import { episode } from "$lib/stores/episode";
-	import { Button } from "../ui/button";
+  import { selectedEpisode } from "$lib/stores/selectedEpisode";
+  import { Button } from "../ui/button";
 
   export let data: {
     details?: TV;
@@ -14,8 +15,10 @@
 
   const selectEpisode = (id: number) => {
     episode.setEpisode(id);
+    selectedEpisode.setSelectedEpisode(id);
   };
 
+  $: selectedEpisodeId = $selectedEpisode;
 </script>
 
 {#if watchData}
@@ -23,12 +26,12 @@
     <div class="flex space-x-1 overflow-x-auto">
       {#each watchData.seasons as season (season.season)}
         <Button
-          variant="outline"
-          class="whitespace-nowrap hover:text-white"
-          on:click={() => selectedSeason = season.season}
-        >
-          S{season.season}
-        </Button>
+        variant="outline"
+        class="whitespace-nowrap hover:text-white {selectedSeason === season.season ? 'text-primary' : ''}"
+        on:click={() => selectedSeason = season.season}
+      >
+        S{season.season}
+      </Button>
       {/each}
     </div>
   </div>
@@ -38,8 +41,8 @@
         <div class="my-8">
           <div class="grid grid-cols-1 gap-2">
             {#each season.episodes as episode (season.season + '-' + episode.episode)}
-            <a href={`/${mode === 'watch' ? 'watch' : 'tv'}/watch/${details?.id}`} on:click={() => selectEpisode(episode.id)}>
-                <div class="flex items-start space-x-4 hover:bg-secondary rounded p-2">
+              <a href={`/${mode === 'watch' ? 'watch' : 'tv'}/watch/${details?.id}`} on:click={() => selectEpisode(episode.id)}>
+                <div class={`flex items-start space-x-4 rounded p-2 ${selectedEpisodeId === episode.id ? 'bg-secondary' : 'hover:bg-secondary'}`}>
                   {#if episode.img && episode.img.mobile}
                     <img class="w-36 h-20 object-cover sm:w-64 sm:h-36" src={episode.img.mobile} alt={episode.title}/>
                   {:else}
