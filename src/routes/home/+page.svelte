@@ -2,7 +2,6 @@
   import Carousel from "$lib/components/carousel.svelte";
 	import Button from "$lib/components/ui/button/button.svelte";
 	import Skeleton from "$lib/components/ui/skeleton/skeleton.svelte";
-	import WatchlistButton from "$lib/components/watchlist-button.svelte";
 	import type { Movie } from "$lib/types/movie";
 	import type { TV } from "$lib/types/tv";
 	import { Splide, SplideSlide } from "@splidejs/svelte-splide";
@@ -100,7 +99,6 @@
                     <Play class="h-4 w-4 mr-1" /> Watch
                   </Button>
                 </a>
-                <WatchlistButton {details}/>
               </div>
             </div> 
           {/if}

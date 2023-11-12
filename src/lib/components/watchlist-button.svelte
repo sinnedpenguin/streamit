@@ -68,12 +68,9 @@
 
         isInWatchlist = false;
         isLoading = true;
+        isLoading = false;
         toast.error('Removed from Watchlist!');
       }
-
-      setTimeout(() => {
-        isLoading = false;
-      }, 1000);
     }
   }
 
@@ -83,18 +80,20 @@
   }
 </script>
 
-<Button 
+{#if $userAuth.user}
+  <Button 
   variant={isInWatchlist ? "destructive" : "secondary"} 
   on:click={() => isLoading ? null : (isInWatchlist ? removeFromWatchlist() : addToWatchList())} 
   disabled={isLoading}
->
+  >
   {#if isLoading} 
-    <Loader2 class="h-4 w-4 animate-spin" />
+    <Loader2 class="h-4 w-4 animate-spin mr-2" /> Loading...
   {:else} 
     {#if isInWatchlist} 
-      <X class="h-4 w-4" /> 
+      <X class="h-4 w-4 mr-2" /> Remove from Watchlist
     {:else} 
-      <Bookmark class="h-4 w-4" /> 
+      <Bookmark class="h-4 w-4 mr-2" /> Add to Watchlist
     {/if} 
   {/if}
-</Button>
+  </Button>
+{/if}
