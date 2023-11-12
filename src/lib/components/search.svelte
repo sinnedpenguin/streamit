@@ -8,6 +8,11 @@
   let debounceTimeout: number | undefined;
 
   const fetchData = async () => {
+    if (query === '') {
+      results = [];
+      return;
+    }
+
     const response = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=${import.meta.env.VITE_TMDB_API_KEY}&query=${query}`);
     if (!response.ok) {
       throw new Error(`Failed to fetch search data: ${response.status}`);
@@ -18,12 +23,12 @@
   };
 
   const debounceSearch = () => {
-    clearTimeout(debounceTimeout);
-    debounceTimeout = setTimeout(() => {
-      if (query !== '') {
+    if (typeof window !== 'undefined') {
+      clearTimeout(debounceTimeout);
+      debounceTimeout = window.setTimeout(() => {
         fetchData();
-      }
-    }, 500); 
+      }, 500);
+    }
   };
 
   const clearInputAndResults = () => {
@@ -37,7 +42,7 @@
 <form class="flex w-full max-w-sm items-center space-x-2">
   <div class="flex items-center space-x-2 w-full">
     <div class="relative w-full">
-      <Input bind:value={query} type="text" placeholder="Search..." class="pl-10 pr-4 py-2 w-80" />
+      <Input bind:value={query} type="text" placeholder="Search..." class="pl-10 pr-4 py-2 w-60 sm:w-72" />
       <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
         <SearchIcon class="h-4 w-4" />
       </div>
