@@ -2,7 +2,7 @@
 	import Search from "./search.svelte";
 	import Button from "./ui/button/button.svelte";
 	import { page } from '$app/stores';
-	import Avatar from "./user/avatar.svelte";
+	import User from "./user/user.svelte";
 	
   const navItems = [
 		{ href: '/home', label: 'Home' },
@@ -23,5 +23,5 @@
     </a>
   {/each}
   <Search />
-	<Avatar />
+	<User />
 </nav>

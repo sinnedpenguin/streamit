@@ -4,7 +4,6 @@
 	import { Circle } from "lucide-svelte";
 
 	type $$Props = DropdownMenuPrimitive.RadioItemProps;
-	type $$Events = DropdownMenuPrimitive.RadioItemEvents;
 
 	let className: $$Props["class"] = undefined;
 	export let value: $$Props["value"];
