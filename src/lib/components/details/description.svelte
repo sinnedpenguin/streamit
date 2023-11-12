@@ -2,6 +2,7 @@
   import { Tv, Star, Clock } from "lucide-svelte";
   import type { Movie } from "$lib/types/movie";
   import type { TV } from "$lib/types/tv";
+	import WatchlistButton from "../watchlist-button.svelte";
 
   export let details: Movie | TV;
   export let casts: Movie[] | TV[];
@@ -17,6 +18,9 @@
 </script>
 
 <div class="container grid items-center mt-4">
+  <div class="mb-4">
+    <WatchlistButton {details} />
+  </div>
   <div class="flex flex-col gap-4">
     <span class="flex items-center">
       <Tv class="h-4 w-4 mr-2 text-primary"/>

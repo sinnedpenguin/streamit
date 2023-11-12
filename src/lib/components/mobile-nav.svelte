@@ -1,11 +1,11 @@
 <script>
+  import * as Sheet from "$lib/components/ui/sheet";
 	import Search from "./search.svelte";
 	import Button from "./ui/button/button.svelte";
 	import { page } from '$app/stores';
 	import User from "./user/user.svelte";
 	import { items } from "$lib/config/nav";
-  	import * as Sheet from "$lib/components/ui/sheet";
-  	import { MenuIcon } from "lucide-svelte";
+  import { MenuIcon } from "lucide-svelte";
 
 	let current = '/'; 
 	$: current = $page.url.pathname;

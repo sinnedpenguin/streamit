@@ -6,6 +6,7 @@
 	import { onNavigate } from '$app/navigation';
 	import PageLoader from "$lib/components/page-loader.svelte";
 	import Breadcrumb from "$lib/components/breadcrumb.svelte";
+  import { Toasts } from 'svoast';
 
 	onNavigate((navigation) => {
 		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -28,4 +29,5 @@
 <SiteHeader />
 <Breadcrumb />
 <slot />
+<Toasts position="bottom-right" />
 <SiteFooter />

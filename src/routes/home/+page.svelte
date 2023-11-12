@@ -2,11 +2,12 @@
   import Carousel from "$lib/components/carousel.svelte";
 	import Button from "$lib/components/ui/button/button.svelte";
 	import Skeleton from "$lib/components/ui/skeleton/skeleton.svelte";
+	import WatchlistButton from "$lib/components/watchlist-button.svelte";
 	import type { Movie } from "$lib/types/movie";
 	import type { TV } from "$lib/types/tv";
 	import { Splide, SplideSlide } from "@splidejs/svelte-splide";
   import '@splidejs/svelte-splide/css';
-	import { Clock, Star, Tv, Play, Bookmark } from "lucide-svelte";
+	import { Clock, Star, Tv, Play } from "lucide-svelte";
 	import { onMount } from "svelte";
 
   export let data: { 
@@ -19,9 +20,9 @@
   let isLoading = true;
 
   const fetchData = async () => {
-    const requests = trendingMovies.map(async (movie, i) => {
-      const response1 = await fetch(`https://api.themoviedb.org/3/movie/${movie.id}?api_key=${import.meta.env.VITE_TMDB_API_KEY}`);
-      const response2 = await fetch(`${import.meta.env.VITE_DETAILS_URL}${movie.id}?type=movie`);
+    const requests = trendingMovies.map(async (details, i) => {
+      const response1 = await fetch(`https://api.themoviedb.org/3/movie/${details.id}?api_key=${import.meta.env.VITE_TMDB_API_KEY}`);
+      const response2 = await fetch(`${import.meta.env.VITE_DETAILS_URL}${details.id}?type=movie`);
 
       if (!response1.ok) {
         console.error(`Failed to fetch details: ${response1.status}`);
@@ -35,7 +36,7 @@
       }
       const data2 = await response2.json();
 
-      trendingMovies[i] = { ...movie, ...data2, ...data1 };
+      trendingMovies[i] = { ...details, ...data2, ...data1 };
     });
 
     await Promise.all(requests);
@@ -69,39 +70,37 @@
       focus: "center", 
       gap: "1rem"}}
     >
-    {#each trendingMovies.slice(0, 5) as movie}
+    {#each trendingMovies.slice(0, 5) as details}
       <SplideSlide>
         <div class="w-full h-60 sm:h-auto md:h-[50vh] lg:h-[60vh] xl:h-[70vh] relative">
           <img
             class="w-full h-full object-cover rounded"
-            src={movie.cover || `https://image.tmdb.org/t/p/w500/${movie.backdrop_path}`}
-            alt={movie.title}
+            src={details.cover || `https://image.tmdb.org/t/p/w500/${details.backdrop_path}`}
+            alt={details.title}
           />
           <div class="absolute inset-0 bg-black opacity-60"></div> 
           {#if !isLoading}
             <div class="absolute bottom-0 left-0 text-white p-4 text-xl mx-4">
-              <h1 class="mt-2 text-lg font-extrabold tracking-tight text-primary md:text-3xl lg:text-3xl">{movie.title}</h1>
+              <h1 class="mt-2 text-lg font-extrabold tracking-tight text-primary md:text-3xl lg:text-3xl">{details.title}</h1>
               <span class="flex items-center mt-4">
                 <Tv class="h-4 w-4 mr-2 text-primary"/>
                 <span class="text-sm">MOVIE</span>
                 <Star class="h-4 w-4 mx-2 text-primary"/>
-                <span class="text-sm">{movie.vote_average.toFixed(1)}</span>
+                <span class="text-sm">{details.vote_average.toFixed(1)}</span>
                 <Clock class="h-4 w-4 mx-2 text-primary"/>
-                <span class="text-sm">{formatRuntime(movie.runtime)}</span>
+                <span class="text-sm">{formatRuntime(details.runtime)}</span>
               </span>
                 <span class="text-sm italic">
-                  {movie.tagline || ''}
+                  {details.tagline || ''}
                 </span>
-              <span class="mt-2 line-clamp-2 overflow-hidden text-ellipsis text-sm">{movie.overview}</span>
+              <span class="mt-2 line-clamp-2 overflow-hidden text-ellipsis text-sm">{details.overview}</span>
               <div class="flex space-x-2 mt-4">
-                <a href="/movie/{movie.id}"> 
+                <a href="/movie/{details.id}"> 
                   <Button>
                     <Play class="h-4 w-4 mr-1" /> Watch
                   </Button>
                 </a>
-                <Button variant="secondary">
-                  <Bookmark class="h-4 w-4" />
-                </Button>
+                <WatchlistButton {details}/>
               </div>
             </div> 
           {/if}
