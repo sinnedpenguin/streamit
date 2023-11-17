@@ -5,8 +5,8 @@ STREAMit! is a free and ad-free Movies/TV Shows streaming app. No sign up or reg
 ## Features
 
 ### Responsive UI
-![Screenshot 2023-11-17 204413](https://github.com/sinnedpenguin/streamit/assets/133164950/a846c800-9c06-495c-b855-7c1223460353)
-![Screenshot 2023-11-17 204428](https://github.com/sinnedpenguin/streamit/assets/133164950/7286ded5-d103-49bb-bb8e-1d348e956a31)
+![Screenshot 2023-11-17 204413](https://github.com/sinnedpenguin/streamit/assets/133164950/caaa75e3-6fb9-42c4-b545-174d9de73872)
+![Screenshot 2023-11-17 204428](https://github.com/sinnedpenguin/streamit/assets/133164950/339a67e3-fff9-4e7e-8822-df6bcf13ab72)
 
 ### Movies/TV Shows Catalog
 
