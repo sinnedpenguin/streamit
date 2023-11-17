@@ -37,6 +37,7 @@
 		"@oplayer/hls": "^1.2.23",
 		"@oplayer/ui": "^1.2.34",
 		"@splidejs/svelte-splide": "^0.2.9",
+		"@vercel/analytics": "^1.1.1",
 		"bits-ui": "^0.6.3",
 		"clsx": "^2.0.0",
 		"hls.js": "^1.4.12",

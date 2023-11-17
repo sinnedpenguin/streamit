@@ -6,6 +6,10 @@
 	import { onNavigate } from '$app/navigation';
 	import PageLoader from "$lib/components/page-loader.svelte";
 	import Breadcrumb from "$lib/components/breadcrumb.svelte";
+	import { dev } from '$app/environment';
+  import { inject } from '@vercel/analytics';
+
+	inject({ mode: dev ? 'development' : 'production' });
 
 	onNavigate((navigation) => {
 		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
