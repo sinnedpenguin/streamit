@@ -1,38 +1,38 @@
-# create-svelte
+# STREAMit!
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+STREAMit! is a free and ad-free Movies/TV Shows streaming app. No sign up or registration needed.
 
-## Creating a project
+## Features
 
-If you're seeing this, you've probably already done this step. Congrats!
+### Responsive UI
+![Screenshot 2023-11-17 204413](https://github.com/sinnedpenguin/streamit/assets/133164950/a846c800-9c06-495c-b855-7c1223460353)
+![Screenshot 2023-11-17 204428](https://github.com/sinnedpenguin/streamit/assets/133164950/7286ded5-d103-49bb-bb8e-1d348e956a31)
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+### Movies/TV Shows Catalog
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+- **Top-Rated**
+- **Trending**
+- **Popular**
+- **By Genre**
+  
+### Search
 
-## Developing
+- Find Movies/TV Shows by searching for titles or keywords.
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+### Recommendations
 
-```bash
-npm run dev
+- **Similar:** See Movies/TV Shows recommendations similar to the one you are currently watching.
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+### Video Player
 
-## Building
+- **Subtitles Selection:** Choose from a variety of available subtitles that suit your preference.
+- **Quality Selection:** Choose the video quality that suits your preference.
+- **Picture-in-Picture (PiP) Mode:** Multitask while watching with PiP support.
+- **Fullscreen:** Watch in fullscreen mode.
 
-To create a production version of your app:
+## License
 
-```bash
-npm run build
-```
+Licensed under the [MIT License](LICENSE).
 
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+## Donation
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/O4O1QRSMK)
