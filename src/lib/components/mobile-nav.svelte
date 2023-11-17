@@ -4,7 +4,7 @@
 	import Button from "./ui/button/button.svelte";
 	import { page } from '$app/stores';
 	import { items } from "$lib/config/nav";
-  import { MenuIcon } from "lucide-svelte";
+  import { MenuIcon, Github } from "lucide-svelte";
 
 	let current = '/'; 
 	$: current = $page.url.pathname;
@@ -37,6 +37,14 @@
         <Sheet.Content>
           <Sheet.Header>
             <Sheet.Title>STREAMit!</Sheet.Title>
+            <a 
+              target="_blank"
+              href="https://github.com/sinnedpenguin/streamit"
+            >
+              <Button variant="ghost">
+                <Github class="h-5 w-5" />
+              </Button>
+            </a>
             {#each items as item (item.href)}
               <a href={item.href}>
                 <Button variant="ghost" class="p-3">

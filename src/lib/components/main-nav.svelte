@@ -43,10 +43,10 @@
         target="_blank"
         href="https://github.com/sinnedpenguin/streamit"
       >
-      <Button variant="ghost">
-        <Github class="h-5 w-5" />
-      </Button>
-    </a>
+        <Button variant="ghost">
+          <Github class="h-5 w-5" />
+        </Button>
+      </a>
     </nav>
   </div>
 </header>
