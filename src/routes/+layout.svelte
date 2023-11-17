@@ -3,9 +3,11 @@
 	import SiteHeader from "$lib/components/site-header.svelte";
 	import SiteFooter from "$lib/components/site-footer.svelte";
 	import { ModeWatcher } from "mode-watcher";
+	import { setMode } from "mode-watcher";
 	import { onNavigate } from '$app/navigation';
 	import PageLoader from "$lib/components/page-loader.svelte";
 	import Breadcrumb from "$lib/components/breadcrumb.svelte";
+	import { onMount } from "svelte";
 	import { dev } from '$app/environment';
   import { inject } from '@vercel/analytics';
 
@@ -25,6 +27,10 @@
 			});
 		});
 	});
+
+  onMount(() => {
+    setMode("dark");
+  });
 </script>
 
 <PageLoader />
