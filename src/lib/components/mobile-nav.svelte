@@ -3,7 +3,6 @@
 	import Search from "./search.svelte";
 	import Button from "./ui/button/button.svelte";
 	import { page } from '$app/stores';
-	import User from "./user/user.svelte";
 	import { items } from "$lib/config/nav";
   import { MenuIcon } from "lucide-svelte";
 
@@ -38,14 +37,13 @@
         <Sheet.Content>
           <Sheet.Header>
             <Sheet.Title>STREAMit!</Sheet.Title>
-            <User />
             {#each items as item (item.href)}
-            <a href={item.href}>
-              <Button variant="ghost" class="p-3">
-                <span class={current === item.href && current !== '/' ? 'text-primary' : ''}>{item.label}</span>
-              </Button>
-            </a>
-          {/each}
+              <a href={item.href}>
+                <Button variant="ghost" class="p-3">
+                  <span class={current === item.href && current !== '/' ? 'text-primary' : ''}>{item.label}</span>
+                </Button>
+              </a>
+            {/each}
           </Sheet.Header>
         </Sheet.Content>
       </Sheet.Root>

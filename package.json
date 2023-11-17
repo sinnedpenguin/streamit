@@ -1,6 +1,6 @@
 {
 	"name": "streamit",
-	"version": "0.0.1",
+	"version": "1.0.0",
 	"private": true,
 	"scripts": {
 		"dev": "vite dev",
@@ -26,7 +26,6 @@
 		"prettier-plugin-svelte": "^2.10.1",
 		"svelte": "^4.0.5",
 		"svelte-check": "^3.4.3",
-		"svoast": "^2.3.0",
 		"tailwindcss": "^3.3.2",
 		"tslib": "^2.4.1",
 		"typescript": "^5.0.0",
@@ -40,7 +39,6 @@
 		"@splidejs/svelte-splide": "^0.2.9",
 		"bits-ui": "^0.6.3",
 		"clsx": "^2.0.0",
-		"firebase": "^10.6.0",
 		"hls.js": "^1.4.12",
 		"lucide-svelte": "^0.288.0",
 		"mode-watcher": "^0.0.5",

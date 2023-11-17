@@ -2,8 +2,8 @@
 	import Search from "./search.svelte";
 	import Button from "./ui/button/button.svelte";
 	import { page } from '$app/stores';
-	import User from "./user/user.svelte";
 	import { items } from "$lib/config/nav";
+  import { Github } from "lucide-svelte";
 
 	let current = '/'; 
 	$: current = $page.url.pathname;
@@ -37,10 +37,16 @@
 			</a>
 		{/each}
     </div>
-
     <nav class="hidden items-center space-x-2 md:flex">
       <Search />
-      <User />
+      <a 
+        target="_blank"
+        href="https://github.com/sinnedpenguin/streamit"
+      >
+      <Button variant="ghost">
+        <Github class="h-5 w-5" />
+      </Button>
+    </a>
     </nav>
   </div>
 </header>

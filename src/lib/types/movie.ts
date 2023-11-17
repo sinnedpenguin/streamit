@@ -1,5 +1,5 @@
 export type Movie = {
-  media_type?: 'movie';
+  media_type: 'movie';
   name: string;
   id: string;
   episodeId: string;

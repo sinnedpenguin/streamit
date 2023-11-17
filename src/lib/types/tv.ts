@@ -1,8 +1,9 @@
 export type TV = {
-  media_type?: 'tv';
-  id: number;
+  media_type: 'tv';
+  id: string;
   episodeId: string;
   name: string;
+  title: string;
   cover: string;
   poster_path: string;
   backdrop_path: string;

@@ -6,6 +6,7 @@
 	import VideoPlayer from "$lib/components/videoplayer.svelte";
   import Details from "$lib/components/details/details.svelte";
   import Cover from "$lib/components/details/cover.svelte";
+  import SupportAlert from "$lib/components/support-alert.svelte"
 
   export let data: {
     details?: Movie;
@@ -36,11 +37,12 @@
 </script>
 
 {#if details}
+  <SupportAlert />
   <section class="container grid items-center mt-4">
     {#if watchData}
       {#if watchData.episodeId !== undefined}
       <VideoPlayer 
-        url={`${import.meta.env.VITE_WATCH_URL}${watchData.episodeId}?id=${watchData.id}`}
+        url={`${import.meta.env.VITE_WATCH_URL}episodeId=${watchData.episodeId}&mediaId=${watchData.id}&server=vidcloud`}
       />
       {:else}
         <NotAvailable />

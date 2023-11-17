@@ -31,7 +31,7 @@
 
     player = Player.make('#oplayer', {
       source: {
-        src: videoUrl,
+        src: `${import.meta.env.VITE_M3U8_CORS_PROXY_URL}url=${videoUrl}`,
       },
       autoplay: true,
     })
@@ -52,7 +52,7 @@
           default: source.quality === 'auto',
         })),
         onChange({value}) {
-          player.changeQuality({src: value});
+          player.changeQuality({src: `${import.meta.env.VITE_M3U8_CORS_PROXY_URL}url=${value}`});
         }
       }]
     })])
@@ -79,8 +79,8 @@
     player.$root.appendChild(backward);
     player.$root.appendChild(forward);
   });
-  
-  onDestroy(() => {
+
+  onDestroy(async () => {
     if (player) {
       player.destroy();
     }

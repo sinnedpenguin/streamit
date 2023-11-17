@@ -14,6 +14,8 @@
     topRatedTVShows: TV[],
     trendingMovies: Movie[],
     trendingTVShows: TV[],
+    popularMovies: Movie[],
+    popularTVShows: TV[]
   }; 
 
   let isLoading = true;
@@ -51,9 +53,11 @@
     return `${hours}h ${minutes}m`;
   };
   
-  const { topRatedMovies, topRatedTVShows, trendingMovies, trendingTVShows } = data;
+  const { topRatedMovies, topRatedTVShows, trendingMovies, trendingTVShows, popularMovies, popularTVShows } = data;
   
-  onMount(fetchData);
+  onMount(async () => {
+    await fetchData();
+  });
 </script>
 
 <section class="container grid items-center mt-4">
@@ -129,4 +133,14 @@
     Trending <span class="text-white">TV Shows</span> 
   </h3>
   <Carousel items={trendingTVShows} url="tv" title="name" />
+
+  <h3 class="scroll-m-20 text-2xl text-primary font-semibold tracking-tight mb-2 mt-4">
+    Popular <span class="text-white">Movies</span> 
+  </h3>
+  <Carousel items={popularMovies} url="movie" title="title" />
+
+  <h3 class="scroll-m-20 text-2xl text-primary font-semibold tracking-tight mb-2 mt-4">
+    Popular <span class="text-white">TV Shows</span> 
+  </h3>
+  <Carousel items={popularTVShows} url="tv" title="name" />
 </section>

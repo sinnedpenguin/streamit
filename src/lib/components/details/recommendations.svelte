@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Movie } from "$lib/types/movie";
   import type { TV } from "$lib/types/tv";
-	import Carousel from "../carousel.svelte";
+	import Carousel from "$lib/components/carousel.svelte";
 
   export let recommendations: (Movie | TV)[];
   export let similar: (Movie | TV)[];

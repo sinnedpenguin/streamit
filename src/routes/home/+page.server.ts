@@ -19,11 +19,15 @@ export const load = (async () => {
   const topRatedTVShows = fetchData(`${apiBaseUrl}/tv/top_rated?api_key=${apiKey}`);
   const trendingMovies = fetchData(`${apiBaseUrl}/trending/movie/day?api_key=${apiKey}`);
   const trendingTVShows = fetchData(`${apiBaseUrl}/trending/tv/day?api_key=${apiKey}`);
+  const popularMovies = fetchData(`${apiBaseUrl}/movie/popular?api_key=${apiKey}`);
+  const popularTVShows = fetchData(`${apiBaseUrl}/tv/popular?api_key=${apiKey}`);
 
   return {
     topRatedMovies,
     topRatedTVShows,
     trendingMovies,
     trendingTVShows,
+    popularMovies,
+    popularTVShows
   };
 }) satisfies PageServerLoad;

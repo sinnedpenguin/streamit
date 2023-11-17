@@ -10,6 +10,7 @@
   import Recommendations from "$lib/components/details/recommendations.svelte";
 	import NotAvailable from "$lib/components/not-available.svelte";
 	import Seasons from "$lib/components/details/seasons.svelte";
+  import SupportAlert from "$lib/components/support-alert.svelte"
 
   export let data: {
     details?: TV;
@@ -48,12 +49,13 @@
 </script>
 
 {#if details}
+  <SupportAlert />
   <section class="container grid items-center mt-4">
     {#if watchData}
       {#key episodeId}
         {#if episodeId !== undefined}
           <VideoPlayer 
-            url={`${import.meta.env.VITE_WATCH_URL}${episodeId}?id=${watchData.id}`}
+            url={`${import.meta.env.VITE_WATCH_URL}episodeId=${episodeId}&mediaId=${watchData.id}&server=vidcloud`}
           />
         {:else}
           <NotAvailable />
