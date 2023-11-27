@@ -31,7 +31,7 @@
 
     player = Player.make('#oplayer', {
       source: {
-        src: `${import.meta.env.VITE_M3U8_CORS_PROXY_URL}url=${videoUrl}`,
+        src:videoUrl,
       },
       autoplay: true,
     })
@@ -52,7 +52,7 @@
           default: source.quality === 'auto',
         })),
         onChange({value}) {
-          player.changeQuality({src: `${import.meta.env.VITE_M3U8_CORS_PROXY_URL}url=${value}`});
+          player.changeQuality({src: value});
         }
       }]
     })])

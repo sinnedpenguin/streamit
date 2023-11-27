@@ -42,7 +42,7 @@
     {#if watchData}
       {#if watchData.episodeId !== undefined}
       <VideoPlayer 
-        url={`${import.meta.env.VITE_WATCH_URL}episodeId=${watchData.episodeId}&mediaId=${watchData.id}&server=vidcloud`}
+        url={`${import.meta.env.VITE_WATCH_URL}${watchData.episodeId}?id=${watchData.id}`}
       />
       {:else}
         <NotAvailable />
